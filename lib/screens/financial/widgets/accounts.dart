@@ -9,6 +9,7 @@ class AccountsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
       height: 120,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

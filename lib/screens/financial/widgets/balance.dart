@@ -9,6 +9,7 @@ class BalanceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
         child: ListTile(
           title: Text(

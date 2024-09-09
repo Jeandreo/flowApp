@@ -9,29 +9,32 @@ class TransactionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        elevation: 5,
-        child: Column(
-          children: [
-            ListTile(
-              title: Text(
-                'Transações Recentes',
-                style: Theme.of(context).textTheme.titleLarge,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Card(
+          elevation: 5,
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  'Transações Recentes',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: transactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = transactions[index];
-                  return _buildTransactionItem(
-                    transaction['description'],
-                    transaction['amount'],
-                  );
-                },
+              Expanded(
+                child: ListView.builder(
+                  itemCount: transactions.length,
+                  itemBuilder: (context, index) {
+                    final transaction = transactions[index];
+                    return _buildTransactionItem(
+                      transaction['description'],
+                      transaction['amount'],
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
