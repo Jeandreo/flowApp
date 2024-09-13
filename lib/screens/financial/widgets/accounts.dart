@@ -23,11 +23,9 @@ class AccountsSection extends StatelessWidget {
   }
 
   Widget _buildAccountCard(String accountName, double balance) {
-    return Container(
-      child: ListTile(
-          title: Text(accountName),
-          subtitle: Text('\$${balance.toStringAsFixed(2)}'),
-        ),
-    );
+    return ListTile(
+        title: Text(accountName),
+        subtitle: Text('\$${balance.toStringAsFixed(2)}'),
+      );
   }
 }

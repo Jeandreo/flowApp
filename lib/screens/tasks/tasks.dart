@@ -13,7 +13,6 @@ class Tasks extends StatelessWidget {
       {'description': 'Compra ABaaC', 'amount': -50.00},
       {'description': 'Depósito XYZ', 'amount': 200.00},
       {'description': 'Pagamento DEF', 'amount': -30.00},
-      // Adicione mais transações conforme necessário
     ];
 
     return Scaffold(

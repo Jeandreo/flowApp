@@ -74,7 +74,6 @@ class Dashboard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5.0),
                 TransactionsSection(transactions: transactions),
-                const SizedBox(height: 15.0),
               ],
             ), 
           );

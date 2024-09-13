@@ -12,9 +12,18 @@ class TransactionsSection extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Card(
-          elevation: 5,
-          child: Column(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(10, 0, 0, 0),
+              blurRadius: 20,
+              offset: Offset(0, 8), // Shadow position
+            ),
+          ],
+        ),
+        child: Column(
             children: [
               Expanded(
                 child: ListView.builder(
@@ -30,7 +39,6 @@ class TransactionsSection extends StatelessWidget {
               ),
             ],
           ),
-        ),
       ),
     );
   }
