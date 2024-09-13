@@ -23,12 +23,12 @@ class Catalogs extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10.0),
-          BalanceSection(balance: 'sad'),
+          const BalanceSection(balance: 'sad'),
           const SizedBox(height: 5.0),
           AccountsSection(accounts: accounts),
           const SizedBox(height: 5.0),

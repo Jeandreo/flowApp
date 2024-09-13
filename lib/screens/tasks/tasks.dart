@@ -17,7 +17,7 @@ class Tasks extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

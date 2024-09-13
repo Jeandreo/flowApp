@@ -1,4 +1,5 @@
 // lib/widgets/transactions_section.dart
+import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsSection extends StatelessWidget {
@@ -41,10 +42,14 @@ class TransactionsSection extends StatelessWidget {
   }
 
   Widget _buildTransactionItem(String description, double amount) {
+
+  // Formata o valor para a exibição
+  final formattedAmount = formatCurrency(amount);
+
     return ListTile(
       title: Text(description),
       trailing: Text(
-        (amount >= 0 ? '+' : '-') + '\$${amount.abs().toStringAsFixed(2)}',
+        formattedAmount,
         style: TextStyle(
           color: amount >= 0 ? Colors.green : Colors.red,
         ),

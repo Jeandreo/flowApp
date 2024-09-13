@@ -26,31 +26,31 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  MainScreenState createState() => MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+class MainScreenState extends State<MainScreen> {
+  int currentIndex = 0;
 
-  final List<Widget> _children = [
+  final List<Widget> children = [
     const Dashboard(),
     const Tasks(),
     const Catalogs(),
   ];
 
-  void _onTabTapped(int index) {
+  void onTabTapped(int index) {
     setState(() {
-      _currentIndex = index;
+      currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: children[currentIndex],
       bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-        onTabTapped: _onTabTapped,
+        currentIndex: currentIndex,
+        onTabTapped: onTabTapped,
       ),
     );
   }

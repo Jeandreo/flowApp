@@ -1,4 +1,4 @@
-import 'package:dream_flow/helpers/helpers.dart';
+import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/screens/financial/widgets/accounts.dart';
 import 'package:dream_flow/screens/financial/widgets/balance.dart';
@@ -12,10 +12,19 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchTransactions(),
         builder: (context, snapshot) {
+
+          // Gerencia as intancias enquanto carrega
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Erro: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return const Center(child: Text('Nenhum dado encontrado.'));
+          }
 
           // Obtém dados da API
           final financialFlow = snapshot.data!;

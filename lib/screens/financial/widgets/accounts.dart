@@ -23,7 +23,7 @@ class AccountsSection extends StatelessWidget {
   }
 
   Widget _buildAccountCard(String accountName, double balance) {
-    return Container(
+    return SizedBox(
       width: 150,
       child: Card(
         child: ListTile(

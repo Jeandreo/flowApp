@@ -11,7 +11,30 @@ ThemeData buildThemeData() {
       onSecondary: Colors.black,
       brightness: Brightness.dark,
     ),
-    scaffoldBackgroundColor: Color.fromARGB(255, 32, 40, 50),
+    scaffoldBackgroundColor: const Color.fromARGB(255, 32, 40, 50),
     useMaterial3: true,
+    fontFamily: 'Jost',
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.w700,
+      ),
+      displayMedium: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.bold,
+      ),
+      displaySmall: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.bold,
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.normal,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.normal,
+      ),
+    ),
   );
 }

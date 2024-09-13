@@ -6,10 +6,10 @@ class BottomNavBar extends StatelessWidget {
   final Function(int) onTabTapped;
 
   const BottomNavBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onTabTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
