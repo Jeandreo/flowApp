@@ -1,8 +1,7 @@
-// lib/widgets/balance_section.dart
 import 'package:flutter/material.dart';
 
 class BalanceSection extends StatelessWidget {
-  final double balance;
+  final String balance;
 
   const BalanceSection({super.key, required this.balance});
 
@@ -17,7 +16,7 @@ class BalanceSection extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           subtitle: Text(
-            '\$${balance.toStringAsFixed(2)}',
+            balance,  // Exibe o valor formatado
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
