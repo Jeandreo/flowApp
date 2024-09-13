@@ -11,9 +11,13 @@ class BalanceSection extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Card(
         child: ListTile(
-          title: Text(
+          title: const Text(
             'Saldo Atual',
-            style: Theme.of(context).textTheme.titleLarge,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.green,
+            ),
           ),
           subtitle: Text(
             balance,  // Exibe o valor formatado

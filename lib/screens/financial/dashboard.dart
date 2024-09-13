@@ -1,9 +1,9 @@
+import 'package:dream_flow/screens/financial/widgets/header.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/screens/financial/widgets/accounts.dart';
 import 'package:dream_flow/screens/financial/widgets/balance.dart';
 import 'package:dream_flow/screens/financial/widgets/transactions.dart';
-import 'package:dream_flow/theme/custom_app_bar.dart';
 import 'package:dream_flow/services/api_service.dart';
 
 class Dashboard extends StatelessWidget {
@@ -12,12 +12,11 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchTransactions(),
         builder: (context, snapshot) {
 
-          // Gerencia as intancias enquanto carrega
+          // Gerencia as instancias enquanto carrega
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
@@ -43,16 +42,31 @@ class Dashboard extends StatelessWidget {
             {'name': 'Conta 3', 'balance': 580.75},
           ];
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10.0),
-              BalanceSection(balance: balance),
-              const SizedBox(height: 5.0),
-              AccountsSection(accounts: accounts),
-              const SizedBox(height: 5.0),
-              TransactionsSection(transactions: transactions),
-            ],
+          return Container(
+            decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [ 
+                Color(0xff18202b),
+                Color(0xff090c11),  
+                Color.fromARGB(255, 232, 232, 232), 
+                Color.fromARGB(255, 232, 232, 232),
+              ],
+              stops: [0.0, 0.36, 0.36, 1.0], // Define onde cada cor começa e termina
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+         child: Column(
+              children: [
+                const SizedBox(height: 50),
+                const HeaderUserSection(),
+                BalanceSection(balance: balance),
+                const SizedBox(height: 5.0),
+                AccountsSection(accounts: accounts),
+                const SizedBox(height: 5.0),
+                TransactionsSection(transactions: transactions),
+              ],
+            ), 
           );
         },
       ),

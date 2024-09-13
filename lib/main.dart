@@ -1,10 +1,10 @@
 // lib/main.dart
-import 'package:flutter/material.dart';
+import 'theme/app_theme.dart';
 import 'theme/bottom_bar.dart';
 import 'screens/financial/dashboard.dart';
 import 'screens/tasks/tasks.dart';
 import 'screens/catalogs/catalogs.dart';
-import 'theme/app_theme.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());

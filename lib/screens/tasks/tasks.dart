@@ -1,6 +1,6 @@
 // lib/screens/dashboard.dart
 import 'package:dream_flow/screens/financial/widgets/transactions.dart';
-import 'package:dream_flow/theme/custom_app_bar.dart';
+import 'package:dream_flow/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class Tasks extends StatelessWidget {
@@ -17,7 +17,7 @@ class Tasks extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const TopBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

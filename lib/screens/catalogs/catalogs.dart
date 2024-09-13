@@ -2,7 +2,7 @@
 import 'package:dream_flow/screens/financial/widgets/accounts.dart';
 import 'package:dream_flow/screens/financial/widgets/balance.dart';
 import 'package:dream_flow/screens/financial/widgets/transactions.dart';
-import 'package:dream_flow/theme/custom_app_bar.dart';
+import 'package:dream_flow/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class Catalogs extends StatelessWidget {
@@ -23,7 +23,7 @@ class Catalogs extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const TopBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

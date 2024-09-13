@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+class TopBar extends StatelessWidget implements PreferredSizeWidget {
+  const TopBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -13,20 +13,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: null,
         icon: Icon(Icons.menu),
       ),
-      title: Image.asset('assets/logo.webp', height: 25),
+      title: Image.asset('assets/images/logo.webp', height: 25),
       centerTitle: true,
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
             borderRadius:
-                BorderRadius.circular(12.0), // Raio das bordas arredondadas
+                BorderRadius.circular(12.0),
             child: Image.asset(
-              'assets/user.jpg', // Caminho da imagem
-              width: 40, // Largura da imagem
-              height: 40, // Altura da imagem
+              'assets/user.jpg',
+              width: 40,
+              height: 40,
               fit:
-                  BoxFit.cover, // Ajusta a imagem para cobrir a área disponível
+                  BoxFit.cover,
             ),
           ),
         ),
