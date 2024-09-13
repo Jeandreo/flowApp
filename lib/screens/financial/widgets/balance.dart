@@ -7,24 +7,23 @@ class BalanceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: Card(
-        child: ListTile(
+    return Column(
+      children: [
+        ListTile(
           title: const Text(
             'Saldo Atual',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: Colors.green,  // Personalize a cor se desejar
             ),
           ),
           subtitle: Text(
             balance,  // Exibe o valor formatado
             style: Theme.of(context).textTheme.titleMedium,
           ),
-        ),
-      ),
+        )
+      ],
     );
   }
 }

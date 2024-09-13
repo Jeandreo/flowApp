@@ -51,10 +51,10 @@ class HeaderUserSection extends StatelessWidget {
               ],
             ),
             Container(
-              width: 40, 
-              height: 40,
+              width: 50, 
+              height: 50,
               decoration: BoxDecoration(
-                color: Colors.orange,
+                color: const Color.fromARGB(50, 0, 0, 0),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: IconButton(

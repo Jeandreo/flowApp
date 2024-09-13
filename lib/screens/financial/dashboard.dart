@@ -48,8 +48,8 @@ class Dashboard extends StatelessWidget {
               colors: [ 
                 Color(0xff18202b),
                 Color(0xff090c11),  
-                Color.fromARGB(255, 232, 232, 232), 
-                Color.fromARGB(255, 232, 232, 232),
+                Color.fromARGB(255, 211, 211, 211), 
+                Color.fromARGB(255, 211, 211, 211), 
               ],
               stops: [0.0, 0.36, 0.36, 1.0], // Define onde cada cor começa e termina
               begin: Alignment.topCenter,
@@ -60,11 +60,21 @@ class Dashboard extends StatelessWidget {
               children: [
                 const SizedBox(height: 50),
                 const HeaderUserSection(),
-                BalanceSection(balance: balance),
-                const SizedBox(height: 5.0),
-                AccountsSection(accounts: accounts),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child:
+                    Card(
+                      child: Column(
+                        children: [
+                          BalanceSection(balance: balance),
+                          AccountsSection(accounts: accounts),
+                        ],
+                      )
+                    ),
+                ),
                 const SizedBox(height: 5.0),
                 TransactionsSection(transactions: transactions),
+                const SizedBox(height: 15.0),
               ],
             ), 
           );

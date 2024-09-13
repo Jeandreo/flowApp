@@ -11,14 +11,6 @@ ThemeData buildThemeData() {
       onSecondary: Colors.black,
       brightness: Brightness.light,
     ),
-    cardTheme: CardTheme(
-      elevation: 5,  // Ajuste a elevação
-      shadowColor: Colors.black.withOpacity(0.1),  // Cor da sombra
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),  // Borda arredondada
-      ),
-    ),
-
     scaffoldBackgroundColor: const Color.fromARGB(255, 32, 40, 50),
     useMaterial3: true,
     fontFamily: 'Jost',

@@ -10,9 +10,9 @@ class AccountsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      height: 80,
+      height: 300,  // Ajuste a altura para acomodar os itens verticalmente
       child: ListView.builder(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         itemCount: accounts.length,
         itemBuilder: (context, index) {
           final account = accounts[index];
@@ -23,14 +23,11 @@ class AccountsSection extends StatelessWidget {
   }
 
   Widget _buildAccountCard(String accountName, double balance) {
-    return SizedBox(
-      width: 150,
-      child: Card(
-        child: ListTile(
+    return Container(
+      child: ListTile(
           title: Text(accountName),
           subtitle: Text('\$${balance.toStringAsFixed(2)}'),
         ),
-      ),
     );
   }
 }

@@ -16,6 +16,9 @@ class BottomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTabTapped,
+      backgroundColor: Colors.black, // Cor de fundo do BottomNavigationBar
+      selectedItemColor: Colors.white, // Cor dos itens selecionados
+      unselectedItemColor: Colors.grey, // Cor dos itens não selecionados
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),

@@ -16,12 +16,6 @@ class TransactionsSection extends StatelessWidget {
           elevation: 5,
           child: Column(
             children: [
-              ListTile(
-                title: Text(
-                  'Transações Recentes',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: transactions.length,
