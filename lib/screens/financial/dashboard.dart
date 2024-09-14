@@ -6,14 +6,14 @@ import 'package:dream_flow/screens/financial/widgets/balance.dart';
 import 'package:dream_flow/screens/financial/widgets/transactions.dart';
 import 'package:dream_flow/services/api_service.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<Map<String, dynamic>>(
-        future: fetchTransactions(),
+        future: fetchTransactions('https://flow.dreamake.com.br/api/transacoes'),
         builder: (context, snapshot) {
 
           // Gerencia as instancias enquanto carrega
@@ -51,7 +51,7 @@ class Dashboard extends StatelessWidget {
                 Color.fromARGB(255, 211, 211, 211), 
                 Color.fromARGB(255, 211, 211, 211), 
               ],
-              stops: [0.0, 0.36, 0.36, 1.0], // Define onde cada cor começa e termina
+              stops: [0.0, 0.36, 0.36, 1.0],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),

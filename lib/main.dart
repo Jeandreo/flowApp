@@ -1,9 +1,8 @@
 // lib/main.dart
-import 'package:dream_flow/screens/auth/auth.dart';
-import 'package:dream_flow/screens/financial/dashboard.dart';
+import 'package:dream_flow/routes/app_routes.dart';
+import 'package:dream_flow/screens/auth/login.dart';
 
 import 'theme/app_theme.dart';
-import 'screens/catalogs/catalogs.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DreamFlow',
-      theme: buildThemeData(),
+      theme: buildThemeData(context),
+      onGenerateRoute: AppRoutes.generateRoute,
       home:  const LoginScreen(),
     );
   }
