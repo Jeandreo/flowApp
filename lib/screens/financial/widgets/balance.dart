@@ -6,7 +6,8 @@ class BalanceSection extends StatefulWidget {
   const BalanceSection({super.key, required this.balance});
 
   @override
-  _BalanceSectionState createState() => _BalanceSectionState();
+    State<BalanceSection> createState() => _BalanceSectionState();
+
 }
 
 class _BalanceSectionState extends State<BalanceSection> {

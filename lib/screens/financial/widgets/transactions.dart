@@ -1,49 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:dream_flow/services/api_service.dart'; // Supondo que você tenha um serviço API configurado
 import 'package:dream_flow/utils/utils.dart'; // Supondo que o formatCurrency esteja aqui
 
-class TransactionsSection extends StatelessWidget {
-  final List<dynamic> transactions;
+class TransactionsSection extends StatefulWidget {
+  const TransactionsSection({super.key});
 
-  const TransactionsSection({super.key, required this.transactions});
+  @override
+  State<TransactionsSection> createState() => _TransactionsSectionState();
+}
+
+class _TransactionsSectionState extends State<TransactionsSection> {
+  late Future<List<dynamic>> _transactionsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    // Carrega os dados da API
+    _transactionsFuture = fetchTransactions('https://flow.dreamake.com.br/api/financeiro/transacoes')
+        .then((data) => data['transactions'] as List<dynamic>);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(30, 0, 0, 0),
-              blurRadius: 25,
-              offset: Offset(0, 8),
+    return FutureBuilder<List<dynamic>>(
+      future: _transactionsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Erro: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
+          return const Center(child: Text('Nenhuma transação encontrada.'));
+        }
+
+        final transactions = snapshot.data!;
+
+        return Expanded(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(30, 0, 0, 0),
+                  blurRadius: 25,
+                  offset: Offset(0, 8),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: transactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = transactions[index];
-                  return _buildTransactionItem(
-                    transaction['name'],
-                    transaction['value'],
-                    transaction['category'],
-                    transaction['category_color'],
-                    transaction['father_icon'],
-                    transaction['fature'],
-                  );
-                },
-              ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      final transaction = transactions[index];
+                      return _buildTransactionItem(
+                        transaction['name'],
+                        transaction['value'],
+                        transaction['category'],
+                        transaction['category_color'],
+                        transaction['father_icon'],
+                        transaction['fature'],
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -55,10 +84,8 @@ class TransactionsSection extends StatelessWidget {
     String? iconName,
     int fature,
   ) {
-    // Formata o valor para exibição
     final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
 
-    // Lógica para ajustar a categoria e ícone quando fature for 1
     final displayCategory = fature == 1 ? 'Fatura' : category;
     final displayCategoryColor = fature == 1
         ? Colors.orange
@@ -119,10 +146,7 @@ class TransactionsSection extends StatelessWidget {
     );
   }
 
-  // Função auxiliar para retornar um ícone baseado no nome
   IconData _getIconForTransaction(String? iconName) {
-    // Coloque aqui a lógica para mapear o nome do ícone para um IconData
-    // Por exemplo:
     switch (iconName) {
       case 'fa-solid fa-house-chimney':
         return Icons.home;

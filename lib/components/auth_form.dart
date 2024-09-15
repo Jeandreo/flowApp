@@ -33,7 +33,7 @@ class _AuthFormState extends State<AuthForm> {
     try {
       // Realiza autenticação
       final response = await http.post(
-        Uri.parse('https://flow.dreamake.com.br/api/login'),
+        Uri.parse('https://flow.dreamake.com.br/api/autenticacao/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password}),
       );

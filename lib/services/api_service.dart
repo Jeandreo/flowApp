@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> login(String email, String password) async {
 
   // URL para login no Flow
-  final url = Uri.parse('https://flow.dreamake.com.br/api/login');
+  final url = Uri.parse('https://flow.dreamake.com.br/api/autenticacao/login');
   
   // Tente
   try {

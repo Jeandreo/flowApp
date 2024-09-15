@@ -9,18 +9,12 @@ class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final transactions = [
-      {'description': 'Compra ABaaC', 'amount': -50.00},
-      {'description': 'Depósito XYZ', 'amount': 200.00},
-      {'description': 'Pagamento DEF', 'amount': -30.00},
-    ];
-
-    return Scaffold(
-      appBar: const TopBar(),
+    return const Scaffold(
+      appBar: TopBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TransactionsSection(transactions: transactions),
+          TransactionsSection(),
         ],
       ),
     );
