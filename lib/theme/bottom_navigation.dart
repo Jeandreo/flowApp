@@ -24,21 +24,25 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xff18202b),
-              Color(0xFF090C11)
-            ],
+            colors: [Color(0xff18202b), Color(0xFF090C11)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26, // Cor da sombra
+              spreadRadius: 1, // Quanto a sombra vai se espalhar
+              blurRadius: 10, // Quanto suave será o desfoque da sombra
+              offset: Offset(0, -4), // Posição da sombra (horizontal, vertical)
+            ),
+          ],
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             BottomAppBar(
               color: Colors.transparent,
-              shape:
-                  const CircularNotchedRectangle(),
+              shape: const CircularNotchedRectangle(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -60,15 +64,16 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                     ),
                     onPressed: () => widget.onItemTapped(1),
                   ),
-                  IconButton(
-                    color: Colors.redAccent,
-                    icon: Icon(
-                      Icons.list,
-                      color: widget.currentIndex == 2
-                          ? Colors.amber
-                          : Colors.white,
+                  Ink(
+                    decoration: const ShapeDecoration(
+                      color: Colors.lightBlue,
+                      shape: CircleBorder(),
                     ),
-                    onPressed: () => widget.onItemTapped(2),
+                    child: IconButton(
+                      icon: const Icon(Icons.add_circle_sharp),
+                      color: Colors.white,
+                      onPressed: () {},
+                    ),
                   ),
                   IconButton(
                     icon: Icon(

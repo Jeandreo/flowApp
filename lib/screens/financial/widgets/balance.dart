@@ -36,7 +36,7 @@ class _BalanceSectionState extends State<BalanceSection> {
               decoration: BoxDecoration(
                 color: const Color.fromARGB(47, 38, 41, 67),
                 borderRadius: BorderRadius.circular(
-                    8), // Define o arredondamento das bordas
+                    8),
               ),
               child: const Icon(
                 Icons.savings,

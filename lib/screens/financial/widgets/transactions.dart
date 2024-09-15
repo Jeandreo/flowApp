@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dream_flow/services/api_service.dart'; // Supondo que você tenha um serviço API configurado
 import 'package:dream_flow/utils/utils.dart'; // Supondo que o formatCurrency esteja aqui
+import 'package:intl/intl.dart'; // Para formatar a data
 
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key});
@@ -63,7 +64,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                       return _buildTransactionItem(
                         transaction['name'],
                         transaction['value'],
-                        transaction['category'],
+                        transaction['date_payment'], // Substituindo category pela data de pagamento
                         transaction['category_color'],
                         transaction['father_icon'],
                         transaction['fature'],
@@ -82,20 +83,18 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   Widget _buildTransactionItem(
     String name,
     String value,
-    String? category,
+    String datePayment, // Recebe a data de pagamento
     String? categoryColor,
     String? iconName,
     int fature,
   ) {
     final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
 
-    final displayCategory = fature == 1 ? 'Fatura' : category;
-    final displayCategoryColor = fature == 1
-        ? Colors.orange
-        : Color(
-            int.parse(categoryColor!.substring(1, 7), radix: 16) + 0xFF000000);
-    final displayIcon =
-        fature == 1 ? Icons.receipt : _getIconForTransaction(iconName);
+    // Formatar a data de pagamento
+    final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
+
+    final displayCategoryColor = fature == 1 ? Colors.orange : Color(int.parse(categoryColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final displayIcon = fature == 1 ? Icons.receipt : _getIconForTransaction(iconName);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -124,8 +123,9 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                // Exibir a data de pagamento
                 Text(
-                  displayCategory!,
+                  formattedDate,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -135,8 +135,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
           Text(
             formattedAmount,
             style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
               color: double.parse(value) >= 0 ? Colors.green : Colors.red,
             ),
           ),

@@ -82,7 +82,7 @@ class _AccountsSectionState extends State<AccountsSection> {
         BoxShadow(
           color: Color.fromARGB(30, 0, 0, 0),
           blurRadius: 25,
-          offset: Offset(0, 8),
+          offset: Offset(0, 0),
         ),
       ],
     ),
