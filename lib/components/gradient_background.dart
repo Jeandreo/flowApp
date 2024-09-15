@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BackgroundContainer extends StatelessWidget {
+class GradientContainer extends StatelessWidget {
   final Widget child;
 
-  const BackgroundContainer({super.key, required this.child});
+  const GradientContainer({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,9 @@ class BackgroundContainer extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             Color(0xff18202b),
-            Color(0xff090c11),
+            Color(0xFF090C11),
           ],
+          stops: [0, 1],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

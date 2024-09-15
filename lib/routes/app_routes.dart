@@ -1,12 +1,12 @@
 import 'package:dream_flow/screens/auth/login.dart';
-import 'package:dream_flow/screens/catalogs/catalogs.dart';
-import 'package:dream_flow/screens/financial/dashboard.dart';
-import 'package:dream_flow/screens/tasks/tasks.dart';
+import 'package:dream_flow/screens/financial/financial_screen.dart';
+import 'package:dream_flow/screens/lists/lists_screen.dart';
+import 'package:dream_flow/screens/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
   static const String login = '/login';
-  static const String dashboard = '/dashboard';
+  static const String financial = '/financeiro';
   static const String tasks = '/tarefas';
   static const String lists = '/listas';
 
@@ -14,12 +14,12 @@ class AppRoutes {
     switch (settings.name) {
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
-      case dashboard:
-        return MaterialPageRoute(builder: (_) => const DashboardScreen());
+      case financial:
+        return MaterialPageRoute(builder: (_) => const FinancialScreen());
       case lists:
-        return MaterialPageRoute(builder: (_) => const Catalogs());
+        return MaterialPageRoute(builder: (_) => const ListsScreen());
       case tasks:
-        return MaterialPageRoute(builder: (_) => const Tasks());
+        return MaterialPageRoute(builder: (_) => const TasksScreen());
       default:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
     }

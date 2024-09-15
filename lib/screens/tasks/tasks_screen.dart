@@ -3,8 +3,8 @@ import 'package:dream_flow/screens/financial/widgets/transactions.dart';
 import 'package:dream_flow/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 
-class Tasks extends StatelessWidget {
-  const Tasks({super.key});
+class TasksScreen extends StatelessWidget {
+  const TasksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

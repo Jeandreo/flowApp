@@ -1,7 +1,7 @@
 import 'package:dream_flow/components/auth_form.dart';
 import 'package:dream_flow/components/copyright.dart';
+import 'package:dream_flow/components/gradient_background.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_flow/components/background_container.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,7 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BackgroundContainer(
+      body: GradientContainer(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context,
-                        '/dashboard'); // Navega para a página /dashboard
+                        '/financeiro'); // Navega para a página /dashboard
                   },
                   child: Image.asset(
                     'assets/logo.webp',

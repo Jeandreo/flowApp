@@ -46,9 +46,9 @@ class _AuthFormState extends State<AuthForm> {
         // Armazena o token e informações do usuário localmente
         await user.saveToPreferences();
 
-        // Navega para a tela de dashboard
+        
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, '/dashboard');
+        Navigator.pushReplacementNamed(context, '/financeiro');
       } else {
         setState(() {
           _errorMessage =
