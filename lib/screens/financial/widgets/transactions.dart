@@ -16,7 +16,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   void initState() {
     super.initState();
     // Carrega os dados da API
-    _transactionsFuture = fetchTransactions('https://flow.dreamake.com.br/api/financeiro/transacoes')
+    _transactionsFuture = fetchTransactions(
+            'https://flow.dreamake.com.br/api/financeiro/transacoes')
         .then((data) => data['transactions'] as List<dynamic>);
   }
 
@@ -29,7 +30,9 @@ class _TransactionsSectionState extends State<TransactionsSection> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Erro: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
+        } else if (!snapshot.hasData ||
+            snapshot.data == null ||
+            snapshot.data!.isEmpty) {
           return const Center(child: Text('Nenhuma transação encontrada.'));
         }
 
@@ -99,7 +102,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: displayCategoryColor,
               shape: BoxShape.circle,
@@ -107,27 +110,23 @@ class _TransactionsSectionState extends State<TransactionsSection> {
             child: Icon(
               displayIcon,
               color: Colors.white,
-              size: 20,
+              size: 17,
             ),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   displayCategory!,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 14,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),

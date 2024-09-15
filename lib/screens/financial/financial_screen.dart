@@ -24,7 +24,7 @@ class FinancialScreen extends StatelessWidget {
               Color.fromARGB(255, 211, 211, 211),
               Color.fromARGB(255, 211, 211, 211),
             ],
-            stops: [0.0, 0.36, 0.36, 1.0],
+            stops: [0.0, 0.29, 0.29, 1.0],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -32,11 +32,10 @@ class FinancialScreen extends StatelessWidget {
         child: const Column(
           children: [
             HeaderUserSection(),
-            SizedBox(height: 10),
             BalanceSection(balance: "R\$ 0,00"),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             AccountsSection(),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             TransactionsSection(),
           ],
         ),

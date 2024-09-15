@@ -28,7 +28,7 @@ class _HeaderUserSectionState extends State<HeaderUserSection> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
