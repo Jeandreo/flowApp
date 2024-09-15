@@ -1,29 +1,73 @@
 import 'package:flutter/material.dart';
 
-class BalanceSection extends StatelessWidget {
+class BalanceSection extends StatefulWidget {
   final String balance;
 
   const BalanceSection({super.key, required this.balance});
 
   @override
+  _BalanceSectionState createState() => _BalanceSectionState();
+}
+
+class _BalanceSectionState extends State<BalanceSection> {
+  bool _isBalanceVisible = false; // Controla a visibilidade do saldo
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: const Text(
-            'Saldo Atual',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.green,  // Personalize a cor se desejar
+    return Container(
+      margin: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(30, 0, 0, 0),
+            blurRadius: 25,
+            offset: Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            leading: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(47, 38, 41, 67),
+                borderRadius: BorderRadius.circular(
+                    8), // Define o arredondamento das bordas
+              ),
+              child: const Icon(
+                Icons.savings,
+                color: Color.fromARGB(221, 37, 39, 49),
+                size: 23,
+              ),
             ),
-          ),
-          subtitle: Text(
-            balance,  // Exibe o valor formatado
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        )
-      ],
+            title: Text(
+              'saldo atual',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            subtitle: Text(
+              _isBalanceVisible
+                  ? widget.balance
+                  : '******', // Mostra ou esconde o saldo
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            trailing: IconButton(
+              icon: Icon(
+                _isBalanceVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+                size: 30,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isBalanceVisible = !_isBalanceVisible;
+                });
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }

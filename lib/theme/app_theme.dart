@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 ThemeData buildThemeData(context) {
   return ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 10, 12, 15),
-      primary: Colors.blue,
-      secondary: Colors.green,
+      seedColor: const Color.fromARGB(255, 0, 0, 0),
+      primary: const Color.fromARGB(255, 160, 208, 1),
+      secondary: const Color.fromARGB(255, 35, 99, 209),
       inversePrimary: const Color(0xFF1C222A),
       onPrimary: Colors.white,
       onSecondary: Colors.black,
@@ -15,13 +15,15 @@ ThemeData buildThemeData(context) {
     useMaterial3: true,
     fontFamily: 'Jost',
     textTheme: const TextTheme(
-      titleLarge: TextStyle(
+      titleSmall: TextStyle(
         fontFamily: 'Jost',
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.normal,
+        color: Color(0xff18202b)
       ),
-      displayMedium: TextStyle(
+      bodySmall: TextStyle(
         fontFamily: 'Jost',
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.normal,
+        color: Colors.black54
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(

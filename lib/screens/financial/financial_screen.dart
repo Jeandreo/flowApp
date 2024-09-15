@@ -59,17 +59,10 @@ class FinancialScreen extends StatelessWidget {
             child: Column(
               children: [
                 const HeaderUserSection(),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Card(
-                    child: Column(
-                      children: [
-                        BalanceSection(balance: balance),
-                        AccountsSection(accounts: accounts),
-                      ],
-                    ),
-                  ),
-                ),
+                const SizedBox(height: 10),
+                BalanceSection(balance: balance),
+                const SizedBox(height: 10),
+                AccountsSection(accounts: accounts),
                 const SizedBox(height: 10),
                 TransactionsSection(transactions: financialFlow['transactions']),
               ],

@@ -10,10 +10,11 @@ class TransactionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           boxShadow: [
             BoxShadow(
               color: Color.fromARGB(30, 0, 0, 0),
@@ -58,9 +59,13 @@ class TransactionsSection extends StatelessWidget {
     final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
 
     // Lógica para ajustar a categoria e ícone quando fature for 1
-    final displayCategory      = fature == 1 ? 'Fatura' : category;
-    final displayCategoryColor = fature == 1 ? Colors.orange : Color(int.parse(categoryColor!.substring(1, 7), radix: 16) + 0xFF000000);
-    final displayIcon          = fature == 1 ? Icons.receipt : _getIconForTransaction(iconName);
+    final displayCategory = fature == 1 ? 'Fatura' : category;
+    final displayCategoryColor = fature == 1
+        ? Colors.orange
+        : Color(
+            int.parse(categoryColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final displayIcon =
+        fature == 1 ? Icons.receipt : _getIconForTransaction(iconName);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),

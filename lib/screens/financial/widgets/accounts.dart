@@ -10,7 +10,7 @@ class AccountsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      height: 200,  // Ajuste a altura para acomodar os itens verticalmente
+      height: 200, // Ajuste a altura para acomodar os itens verticalmente
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: accounts.length,
@@ -23,9 +23,18 @@ class AccountsSection extends StatelessWidget {
   }
 
   Widget _buildAccountCard(String accountName, double balance) {
-    return ListTile(
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: ListTile(
+        leading: Image.network(
+          'https://flow.dreamake.com.br/storage/instituicoes/1/logo-150px.jpg',
+          width: 50,
+          height: 50,
+          fit: BoxFit.cover,
+        ),
         title: Text(accountName),
         subtitle: Text('\$${balance.toStringAsFixed(2)}'),
-      );
+      ),
+    );
   }
 }
