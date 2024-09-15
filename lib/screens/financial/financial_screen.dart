@@ -1,8 +1,8 @@
+import 'package:dream_flow/screens/financial/widgets/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/screens/financial/widgets/accounts.dart';
 import 'package:dream_flow/screens/financial/widgets/balance.dart';
 import 'package:dream_flow/screens/financial/widgets/header.dart';
-import 'package:dream_flow/screens/financial/widgets/transactions.dart';
 import 'package:dream_flow/services/api_service.dart';
 import 'package:dream_flow/utils/utils.dart';
 
@@ -70,7 +70,8 @@ class FinancialScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // TransactionsSection(transactions: financialFlow['transactions']),
+                const SizedBox(height: 10),
+                TransactionsSection(transactions: financialFlow['transactions']),
               ],
             ),
           );

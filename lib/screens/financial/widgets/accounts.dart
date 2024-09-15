@@ -10,7 +10,7 @@ class AccountsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      height: 300,  // Ajuste a altura para acomodar os itens verticalmente
+      height: 200,  // Ajuste a altura para acomodar os itens verticalmente
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: accounts.length,
