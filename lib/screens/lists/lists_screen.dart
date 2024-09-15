@@ -10,12 +10,7 @@ class ListsScreen extends StatelessWidget {
 
     return const Scaffold(
       appBar: TopBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AccountsSection(),
-        ],
-      ),
+      body: AccountsSection()
     );
   }
 }

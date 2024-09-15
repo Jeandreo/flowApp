@@ -15,12 +15,10 @@ class _AccountsSectionState extends State<AccountsSection> {
   @override
   void initState() {
     super.initState();
-    // Carrega os dados da API
     _accountsFuture = fetchAccounts();
   }
 
   Future<List<Map<String, dynamic>>> fetchAccounts() async {
-    // Busca as carteiras e cartoes do usuário
     final response = await http.get(Uri.parse(
         'https://flow.dreamake.com.br/api/financeiro/carteiras-e-cartoes'));
 
@@ -41,24 +39,26 @@ class _AccountsSectionState extends State<AccountsSection> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Erro: ${snapshot.error}'));
-        } else if (!snapshot.hasData ||
-            snapshot.data == null ||
-            snapshot.data!.isEmpty) {
+        } else if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
           return const Center(child: Text('Nenhuma conta encontrada.'));
         }
 
         final accounts = snapshot.data!;
 
-        return Container(
-          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-          height: 200, // Ajuste a altura para acomodar os itens verticalmente
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: accounts.length,
-            itemBuilder: (context, index) {
-              final account = accounts[index];
-              return _buildAccountCard(account['institution_id'], account['name']);
-            },
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Wrap(
+            spacing: 10.0, // Espaçamento horizontal
+            runSpacing: 10.0, // Espaçamento vertical
+            children: accounts.map((account) {
+              return Container(
+                width: (MediaQuery.of(context).size.width - 30) / 2, // Divida a largura disponível em 2 colunas
+                child: _buildAccountCard(
+                  account['institution_id']!,
+                  account['name']!,
+                ),
+              );
+            }).toList(),
           ),
         );
       },
@@ -71,7 +71,6 @@ class _AccountsSectionState extends State<AccountsSection> {
 
   Widget _buildAccountCard(int institutionId, String accountName) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 5),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -83,28 +82,27 @@ class _AccountsSectionState extends State<AccountsSection> {
           ),
         ],
       ),
-      child: Column(
-        children: [
-          ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                _getImageUrl(institutionId),
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-            ),
-            title: Text(
-              accountName,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            subtitle: Text(
-              '******', // Mostra ou esconde o saldo
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          )
-        ],
+      child: ListTile(
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.network(
+            _getImageUrl(institutionId),
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+        ),
+        title: Text(
+          accountName,
+          style: Theme.of(context).textTheme.titleSmall,
+          maxLines: 1, // Limita a 1 linha
+          overflow: TextOverflow.ellipsis, // Adiciona "..." se o texto for maior que o espaço disponível
+        ),
+
+        subtitle: Text(
+          '******', // Mostra ou esconde o saldo
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ),
     );
   }
