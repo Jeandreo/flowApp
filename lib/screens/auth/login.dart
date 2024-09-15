@@ -1,4 +1,5 @@
 import 'package:dream_flow/components/auth_form.dart';
+import 'package:dream_flow/components/copyright.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/components/background_container.dart';
 
@@ -6,7 +7,7 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -60,19 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const AuthForm(),
               const Spacer(),
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    'sulink.com.br',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
+              const Copyright(),
             ],
           ),
         ),

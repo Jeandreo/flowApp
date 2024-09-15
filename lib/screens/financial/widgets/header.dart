@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HeaderUserSection extends StatelessWidget {
+class HeaderUserSection extends StatefulWidget {
   const HeaderUserSection({super.key});
+
+  @override
+  State<HeaderUserSection> createState() => _HeaderUserSectionState();
+
+}
+
+class _HeaderUserSectionState extends State<HeaderUserSection> {
+  String? userName;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName(); // Chama a função que carrega o nome do usuário ao inicializar o widget
+  }
+
+  Future<void> _loadUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('userName') ?? 'Usuário';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +47,12 @@ class HeaderUserSection extends StatelessWidget {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 16.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Boa tarde',
                       style: TextStyle(
                         fontSize: 16,
@@ -39,8 +61,8 @@ class HeaderUserSection extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Jeandreo!',
-                      style: TextStyle(
+                      '${userName ?? 'Usuário'}!', // Exibe o nome ou "Usuário" enquanto carrega
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -62,7 +84,7 @@ class HeaderUserSection extends StatelessWidget {
               iconSize: 25,
               icon: const Icon(Icons.logout, color: Colors.white),
               onPressed: () {
-                Navigator.pushNamed(context, '/login'); // Redireciona para a página de login
+                Navigator.pushNamed(context, '/listas');
               },
             ),
           ),

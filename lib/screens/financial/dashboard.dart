@@ -27,10 +27,6 @@ class DashboardScreen extends StatelessWidget {
 
           // Obtém dados da API
           final financialFlow = snapshot.data!;
-          final transactions = (financialFlow['transactions'] as List).map((transaction) => {
-                                  'description': transaction['name'],
-                                  'amount': double.parse(transaction['value']),
-                                }).toList();
 
           // Obtém total do Saldo Atual
           final balance = formatCurrency(financialFlow['current']['total']);
@@ -72,8 +68,7 @@ class DashboardScreen extends StatelessWidget {
                       )
                     ),
                 ),
-                const SizedBox(height: 5.0),
-                TransactionsSection(transactions: transactions),
+                TransactionsSection(transactions: financialFlow['transactions']),
               ],
             ), 
           );

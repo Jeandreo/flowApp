@@ -1,16 +1,16 @@
 import 'dart:convert';
+import 'package:dream_flow/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
 
   @override
-  State<AuthForm> createState() => _MyWidgetState();
+  State<AuthForm> createState() => _AuthFormState();
 }
 
-class _MyWidgetState extends State<AuthForm> {
+class _AuthFormState extends State<AuthForm> {
   // Variáveis responsáveis pela Autenticação
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -38,17 +38,16 @@ class _MyWidgetState extends State<AuthForm> {
         body: jsonEncode({'email': email, 'password': password}),
       );
 
-      // Se os dados estiverem corretos
       if (response.statusCode == 200) {
-        // Decodifica o JSON e extrai o token
+        // Decodifica o JSON e cria um objeto UserModel
         final responseData = json.decode(response.body);
-        final token = responseData['token'];
+        final user = UserModel.fromJson(responseData);
 
-        // Armazena o token localmente usando SharedPreferences
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('authToken', token);
+        // Armazena o token e informações do usuário localmente
+        await user.saveToPreferences();
 
         // Navega para a tela de dashboard
+        if (!mounted) return;
         Navigator.pushReplacementNamed(context, '/dashboard');
       } else {
         setState(() {

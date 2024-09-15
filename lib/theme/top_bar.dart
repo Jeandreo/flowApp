@@ -13,20 +13,28 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: null,
         icon: Icon(Icons.menu),
       ),
-      title: Image.asset('assets/images/logo.webp', height: 25),
+      title: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(
+              context, '/dashboard'); // Navega para a página /dashboard
+        },
+        child: Image.asset(
+          'assets/logo.webp',
+          height: 25,
+          fit: BoxFit.contain,
+        ),
+      ),
       centerTitle: true,
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
-            borderRadius:
-                BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(12.0),
             child: Image.asset(
               'assets/user.jpg',
               width: 40,
               height: 40,
-              fit:
-                  BoxFit.cover,
+              fit: BoxFit.cover,
             ),
           ),
         ),

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'DreamFlow',
       theme: buildThemeData(context),
       onGenerateRoute: AppRoutes.generateRoute,
-      home:  const LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }
