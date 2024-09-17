@@ -39,6 +39,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
 
         final transactions = snapshot.data!;
 
+        print(transactions);
+
         return Expanded(
           child: Container(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
@@ -64,8 +66,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                       return _buildTransactionItem(
                         transaction['name'],
                         transaction['value'],
-                        transaction['date_payment'], // Substituindo category pela data de pagamento
-                        transaction['category_color'],
+                        transaction['date_payment'],
+                        transaction['father_color'],
                         transaction['father_icon'],
                         transaction['fature'],
                       );
@@ -84,7 +86,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     String name,
     String value,
     String datePayment, // Recebe a data de pagamento
-    String? categoryColor,
+    String? fatherColor,
     String? iconName,
     int fature,
   ) {
@@ -93,7 +95,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     // Formatar a data de pagamento
     final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
 
-    final displayCategoryColor = fature == 1 ? Colors.orange : Color(int.parse(categoryColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final displayfatherColor = fature == 1 ? Colors.orange : Color(int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
     final displayIcon = fature == 1 ? Icons.receipt : _getIconForTransaction(iconName);
 
     return Container(
@@ -103,7 +105,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: displayCategoryColor,
+              color: displayfatherColor,
               shape: BoxShape.circle,
             ),
             child: Icon(
