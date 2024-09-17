@@ -30,10 +30,10 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26, // Cor da sombra
-              spreadRadius: 1, // Quanto a sombra vai se espalhar
-              blurRadius: 10, // Quanto suave será o desfoque da sombra
-              offset: Offset(0, -4), // Posição da sombra (horizontal, vertical)
+              color: Colors.black26,
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: Offset(0, -4),
             ),
           ],
         ),
@@ -72,7 +72,26 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                     child: IconButton(
                       icon: const Icon(Icons.add_circle_sharp),
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        // Exibir o pop-up
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Ação"),
+                              content: const Text("Você clicou no botão central!"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Fechar"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                   IconButton(
