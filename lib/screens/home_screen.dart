@@ -1,3 +1,4 @@
+import 'package:dream_flow/screens/financial/transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/screens/financial/financial_screen.dart';
 import 'package:dream_flow/screens/tasks/tasks_screen.dart';
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     const FinancialScreen(),
+    const TransactionsScreen(),
     const TasksScreen(),
     const ListsScreen(),
   ];

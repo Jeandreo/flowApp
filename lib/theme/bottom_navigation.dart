@@ -73,7 +73,6 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                       icon: const Icon(Icons.add_circle_sharp),
                       color: Colors.white,
                       onPressed: () {
-                        // Exibir o pop-up
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {

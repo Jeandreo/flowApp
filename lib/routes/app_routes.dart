@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class AppRoutes {
   static const String login = '/login';
   static const String financial = '/financeiro';
+  static const String transactions = '/transacoes';
   static const String tasks = '/tarefas';
   static const String lists = '/listas';
 
@@ -15,6 +16,8 @@ class AppRoutes {
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case financial:
+        return MaterialPageRoute(builder: (_) => const FinancialScreen());
+      case transactions:
         return MaterialPageRoute(builder: (_) => const FinancialScreen());
       case lists:
         return MaterialPageRoute(builder: (_) => const ListsScreen());
