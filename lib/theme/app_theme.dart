@@ -25,6 +25,17 @@ ThemeData buildThemeData(context) {
         fontWeight: FontWeight.normal,
         color: Colors.black54
       ),
+      bodyMedium: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.normal,
+        fontSize: 20,
+        color: Color(0xff18202b)
+      ),
+      labelSmall: TextStyle(
+        fontFamily: 'Jost',
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+        color: Color(0xff7e8299)),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,

@@ -39,8 +39,6 @@ class _TransactionsSectionState extends State<TransactionsSection> {
 
         final transactions = snapshot.data!;
 
-        print(transactions);
-
         return Expanded(
           child: Container(
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
@@ -67,8 +65,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                         transaction['name'],
                         transaction['value'],
                         transaction['date_payment'],
-                        transaction['father_color'],
-                        transaction['father_icon'],
+                        transaction['color'],
+                        transaction['icon'],
                         transaction['fature'],
                       );
                     },
@@ -90,13 +88,13 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     String? iconName,
     int fature,
   ) {
+
     final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
 
     // Formatar a data de pagamento
     final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
-
     final displayfatherColor = fature == 1 ? Colors.orange : Color(int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
-    final displayIcon = fature == 1 ? Icons.receipt : _getIconForTransaction(iconName);
+    final displayIcon = fature == 1 ? Icons.receipt : getIconAwsome(iconName);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -147,12 +145,4 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     );
   }
 
-  IconData _getIconForTransaction(String? iconName) {
-    switch (iconName) {
-      case 'fa-solid fa-house-chimney':
-        return Icons.home;
-      default:
-        return Icons.account_balance_wallet;
-    }
-  }
 }
