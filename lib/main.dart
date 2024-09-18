@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DreamFlow',
+      title: 'Sulink Grow',
       theme: buildThemeData(context),
       locale: const Locale('pt', 'BR'),
       localizationsDelegates: const [

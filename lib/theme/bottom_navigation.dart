@@ -25,16 +25,15 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 0, 108, 209),
-              Color.fromARGB(255, 1, 13, 121)
+                  Color.fromARGB(255, 0, 153, 209),
+                  Color.fromARGB(255, 2, 97, 193),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(50, 0, 0, 0),
-              spreadRadius: 1,
+              color: Color.fromARGB(30, 0, 0, 0),
               blurRadius: 15,
               offset: Offset(0, -5),
             ),

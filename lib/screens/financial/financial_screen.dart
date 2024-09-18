@@ -15,8 +15,8 @@ class FinancialScreen extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 0, 108, 209),
-                  Color.fromARGB(255, 0, 78, 194),
+                  Color.fromARGB(255, 0, 153, 209),
+                  Color.fromARGB(255, 2, 97, 193),
                   Color.fromARGB(255, 232, 232, 232),
                   Color.fromARGB(255, 232, 232, 232),
                 ],

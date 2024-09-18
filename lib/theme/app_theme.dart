@@ -12,7 +12,7 @@ ThemeData buildThemeData(context) {
       brightness: Brightness.light,
     ),
     scaffoldBackgroundColor: const 
-                  Color.fromARGB(255, 0, 108, 209),
+                  Color.fromARGB(255, 0, 153, 209),
     useMaterial3: true,
     fontFamily: 'Jost',
     textTheme: const TextTheme(
