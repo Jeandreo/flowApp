@@ -1,6 +1,6 @@
 import 'package:dream_flow/components/auth_form.dart';
-import 'package:dream_flow/components/copyright.dart';
-import 'package:dream_flow/components/gradient_full_vertical.dart';
+import 'package:dream_flow/screens/_partials/copyright.dart';
+import 'package:dream_flow/screens/_partials/gradient_full_vertical.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {

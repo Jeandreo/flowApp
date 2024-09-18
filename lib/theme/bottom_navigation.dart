@@ -1,3 +1,4 @@
+import 'package:dream_flow/screens/financial/forms/new_transactions.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigationLayout extends StatefulWidget {
@@ -23,17 +24,11 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
       body: widget.child,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-                  Color.fromARGB(255, 0, 153, 209),
-                  Color.fromARGB(255, 2, 97, 193),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.white, // Fundo branco
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(30, 0, 0, 0),
+              color: Color.fromARGB(20, 0, 0, 0),
+              spreadRadius: 1,
               blurRadius: 15,
               offset: Offset(0, -5),
             ),
@@ -43,73 +38,65 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             BottomAppBar(
-              color: Colors.transparent,
+              padding: EdgeInsets.all(0),
+              color: Colors.white,
               shape: const CircularNotchedRectangle(),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   IconButton(
                     icon: Icon(
                       Icons.dashboard,
+                      size: 25,
                       color: widget.currentIndex == 0
-                          ? Colors.amber
-                          : Colors.white,
+                          ? Color.fromARGB(255, 0, 171, 209)
+                          : Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(0),
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.task,
+                      size: 25,
                       color: widget.currentIndex == 1
-                          ? Colors.amber
-                          : Colors.white,
+                          ? Color.fromARGB(255, 0, 108, 209)
+                          : Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(1),
                   ),
-                  Ink(
-                    decoration: const ShapeDecoration(
+                  Container(
+                    width: 70,
+                    height: 50,
+                    decoration: BoxDecoration(
                       color: Color.fromARGB(255, 255, 152, 7),
-                      shape: CircleBorder(),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: IconButton(
-                      icon: const Icon(Icons.add_circle_sharp),
-                      color: Colors.white,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("Ação"),
-                              content: const Text("Você clicou no botão central!"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text("Fechar"),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
+                    child: Center(
+                      child: IconButton(
+                        icon: const Icon(Icons.add_circle_sharp, size: 30, color: Colors.white),
+                        onPressed: () {
+                          TransactionForm.showTransactionForm(context);
+                        },
+                      ),
                     ),
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.list,
+                      size: 25,
                       color: widget.currentIndex == 2
-                          ? Colors.amber
-                          : Colors.white,
+                          ? Color.fromARGB(255, 0, 108, 209)
+                          : Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(2),
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.list,
+                      size: 25,
                       color: widget.currentIndex == 2
-                          ? Colors.amber
-                          : Colors.white,
+                          ? Color.fromARGB(255, 0, 108, 209)
+                          : Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(2),
                   ),

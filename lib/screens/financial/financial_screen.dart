@@ -16,9 +16,9 @@ class FinancialScreen extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   Color.fromARGB(255, 0, 153, 209),
-                  Color.fromARGB(255, 2, 97, 193),
-                  Color.fromARGB(255, 232, 232, 232),
-                  Color.fromARGB(255, 232, 232, 232),
+                  Color.fromARGB(255, 0, 42, 147),
+                  Color.fromARGB(250, 250, 250, 250),
+                  Color.fromARGB(250, 250, 250, 250),
                 ],
                 stops: [0.0, 0.2, 0.2, 1.0],
                 begin: Alignment.topCenter,

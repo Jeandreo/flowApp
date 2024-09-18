@@ -81,7 +81,7 @@ class _AccountsSectionState extends State<AccountsSection> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(20, 0, 0, 0),
+            color: Color.fromARGB(15, 0, 0, 0),
             blurRadius: 10,
             offset: Offset(0, 5),
           ),
