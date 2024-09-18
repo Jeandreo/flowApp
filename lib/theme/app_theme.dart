@@ -11,32 +11,28 @@ ThemeData buildThemeData(context) {
       onSecondary: Colors.black,
       brightness: Brightness.light,
     ),
-    scaffoldBackgroundColor: const 
-                  Color.fromARGB(255, 0, 153, 209),
+    scaffoldBackgroundColor: const Color.fromARGB(255, 0, 153, 209),
     useMaterial3: true,
     fontFamily: 'Jost',
     textTheme: const TextTheme(
       titleSmall: TextStyle(
-        fontFamily: 'Jost',
-        fontWeight: FontWeight.normal,
-        color: Color(0xff18202b)
-      ),
+          fontFamily: 'Jost',
+          fontWeight: FontWeight.normal,
+          color: Color(0xff18202b)),
       bodySmall: TextStyle(
-        fontFamily: 'Jost',
-        fontWeight: FontWeight.normal,
-        color: Colors.black54
-      ),
+          fontFamily: 'Jost',
+          fontWeight: FontWeight.normal,
+          color: Colors.black54),
       bodyMedium: TextStyle(
-        fontFamily: 'Jost',
-        fontWeight: FontWeight.normal,
-        fontSize: 20,
-        color: Color(0xff18202b)
-      ),
+          fontFamily: 'Jost',
+          fontWeight: FontWeight.normal,
+          fontSize: 20,
+          color: Color(0xff18202b)),
       labelSmall: TextStyle(
-        fontFamily: 'Jost',
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-        color: Color(0xff7e8299)),
+          fontFamily: 'Jost',
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          color: Color(0xff7e8299)),
     ),
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
