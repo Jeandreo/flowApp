@@ -40,40 +40,19 @@ class _TransactionsSectionState extends State<TransactionsSection> {
         final transactions = snapshot.data!;
 
         return Expanded(
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(30, 0, 0, 0),
-                  blurRadius: 25,
-                  offset: Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: transactions.length,
-                    itemBuilder: (context, index) {
-                      final transaction = transactions[index];
-                      return _buildTransactionItem(
-                        transaction['name'],
-                        transaction['value'],
-                        transaction['date_payment'],
-                        transaction['color'],
-                        transaction['icon'],
-                        transaction['fature'],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+          child: ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (context, index) {
+              final transaction = transactions[index];
+              return _buildTransactionItem(
+                transaction['name'],
+                transaction['value'],
+                transaction['date_payment'],
+                transaction['color'],
+                transaction['icon'],
+                transaction['fature'],
+              );
+            },
           ),
         );
       },
@@ -88,12 +67,15 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     String? iconName,
     int fature,
   ) {
-
     final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
 
     // Formatar a data de pagamento
-    final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
-    final displayfatherColor = fature == 1 ? Colors.orange : Color(int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final formattedDate =
+        DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
+    final displayfatherColor = fature == 1
+        ? Colors.orange
+        : Color(
+            int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
     final displayIcon = fature == 1 ? Icons.receipt : getIconAwsome(iconName);
 
     return Container(
@@ -101,7 +83,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: displayfatherColor,
               shape: BoxShape.circle,
@@ -109,7 +91,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
             child: Icon(
               displayIcon,
               color: Colors.white,
-              size: 17,
+              size: 20,
             ),
           ),
           const SizedBox(width: 10),
@@ -144,5 +126,4 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       ),
     );
   }
-
 }

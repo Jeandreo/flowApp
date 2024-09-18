@@ -15,11 +15,10 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(
-              context, '/dashboard'); // Navega para a página /dashboard
+          Navigator.pushReplacementNamed(context, '/financeiro');
         },
         child: Image.asset(
-          'assets/logo.webp',
+          'assets/images/logo.webp',
           height: 25,
           fit: BoxFit.contain,
         ),
@@ -31,7 +30,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
             child: Image.asset(
-              'assets/user.jpg',
+              'assets/images/user.jpg',
               width: 40,
               height: 40,
               fit: BoxFit.cover,

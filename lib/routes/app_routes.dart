@@ -1,11 +1,14 @@
 import 'package:dream_flow/screens/auth/login.dart';
 import 'package:dream_flow/screens/financial/financial_screen.dart';
+import 'package:dream_flow/screens/financial/transactions_screen.dart';
+import 'package:dream_flow/screens/home_screen.dart';
 import 'package:dream_flow/screens/lists/lists_screen.dart';
 import 'package:dream_flow/screens/tasks/tasks_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
   static const String login = '/login';
+  static const String homescren = '/inicio';
   static const String financial = '/financeiro';
   static const String transactions = '/transacoes';
   static const String tasks = '/tarefas';
@@ -15,10 +18,12 @@ class AppRoutes {
     switch (settings.name) {
       case login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case homescren:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
       case financial:
         return MaterialPageRoute(builder: (_) => const FinancialScreen());
       case transactions:
-        return MaterialPageRoute(builder: (_) => const FinancialScreen());
+        return MaterialPageRoute(builder: (_) => const TransactionsScreen());
       case lists:
         return MaterialPageRoute(builder: (_) => const ListsScreen());
       case tasks:

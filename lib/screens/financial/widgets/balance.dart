@@ -11,7 +11,7 @@ class BalanceSection extends StatefulWidget {
 }
 
 class _BalanceSectionState extends State<BalanceSection> {
-  bool _isBalanceVisible = false; // Controla a visibilidade do saldo
+  bool _isBalanceVisible = false;
 
   @override
   Widget build(BuildContext context) {

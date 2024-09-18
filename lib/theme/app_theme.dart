@@ -4,14 +4,14 @@ ThemeData buildThemeData(context) {
   return ThemeData(
     colorScheme: ColorScheme.fromSeed(
       seedColor: const Color.fromARGB(255, 0, 0, 0),
-      primary: const Color.fromARGB(255, 160, 208, 1),
-      secondary: const Color.fromARGB(255, 35, 99, 209),
+      primary: const Color.fromARGB(255, 2, 39, 123),
+      secondary: const Color.fromARGB(255, 238, 7, 161),
       inversePrimary: const Color(0xFF1C222A),
       onPrimary: Colors.white,
       onSecondary: Colors.black,
       brightness: Brightness.light,
     ),
-    scaffoldBackgroundColor: const Color(0xff18202b),
+    scaffoldBackgroundColor: const Color.fromARGB(255, 2, 39, 123),
     useMaterial3: true,
     fontFamily: 'Jost',
     textTheme: const TextTheme(

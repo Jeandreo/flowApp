@@ -39,7 +39,7 @@ class UserModel {
     final email = prefs.getString('userEmail');
 
     if (token != null && name != null && email != null) {
-      return UserModel(id: 0, name: name, email: email, token: token); // Ajuste o id conforme necessário
+      return UserModel(id: 0, name: name, email: email, token: token);
     }
 
     return null; // Se não houver dados salvos

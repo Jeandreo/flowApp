@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dream_flow/models/user_model.dart'; // Importar o UserModel
 
 class HeaderUserSection extends StatefulWidget {
   const HeaderUserSection({super.key});
 
   @override
   State<HeaderUserSection> createState() => _HeaderUserSectionState();
-
 }
 
 class _HeaderUserSectionState extends State<HeaderUserSection> {
@@ -25,6 +25,12 @@ class _HeaderUserSectionState extends State<HeaderUserSection> {
     });
   }
 
+  Future<void> _logout() async {
+    await UserModel.clearPreferences(); // Limpa as preferências
+    if (!mounted) return; // Verifica se o widget ainda está montado
+    Navigator.pushReplacementNamed(context, '/login'); // Redireciona para a tela de login
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +45,7 @@ class _HeaderUserSectionState extends State<HeaderUserSection> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      'assets/user.jpg',
+                      'assets/images/user.jpg',
                       height: 70,
                       width: 70,
                       fit: BoxFit.cover,
@@ -84,7 +90,7 @@ class _HeaderUserSectionState extends State<HeaderUserSection> {
               iconSize: 25,
               icon: const Icon(Icons.logout, color: Colors.white),
               onPressed: () {
-                Navigator.pushNamed(context, '/listas');
+                _logout(); // Chama a função de logout
               },
             ),
           ),

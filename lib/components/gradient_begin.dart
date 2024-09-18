@@ -16,7 +16,7 @@ class GradientBegin extends StatelessWidget {
             Color.fromARGB(255, 211, 211, 211),
             Color.fromARGB(255, 211, 211, 211),
           ],
-          stops: [0.0, 0.29, 0.29, 1.0],
+          stops: [0.0, 0.25, 0.25, 1.0],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

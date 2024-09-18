@@ -9,11 +9,12 @@ class Copyright extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: 20),
         child: Text(
-          'sulink.com.br',
+          'WWW.SULINK.COM.BR',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 14,
+            fontSize: 12,
+            fontWeight: FontWeight.w600
           ),
         ),
       ),

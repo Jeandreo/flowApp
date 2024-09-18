@@ -1,4 +1,4 @@
-import 'package:dream_flow/components/card_shadow.dart';
+import 'package:dream_flow/screens/partials/card_shadow.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

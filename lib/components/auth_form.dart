@@ -38,6 +38,7 @@ class _AuthFormState extends State<AuthForm> {
         body: jsonEncode({'email': email, 'password': password}),
       );
 
+      // Se a resposta for bem sucedido
       if (response.statusCode == 200) {
         // Decodifica o JSON e cria um objeto UserModel
         final responseData = json.decode(response.body);
@@ -46,9 +47,8 @@ class _AuthFormState extends State<AuthForm> {
         // Armazena o token e informações do usuário localmente
         await user.saveToPreferences();
 
-        
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, '/financeiro');
+        Navigator.pushReplacementNamed(context, '/inicio');
       } else {
         setState(() {
           _errorMessage =
@@ -64,29 +64,60 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
       children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'E-MAIL',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 5),
         TextField(
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
-          decoration: const InputDecoration(
-            labelText: 'Email',
+        ),
+        const SizedBox(height: 15),
+        const Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'SENHA',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 5),
         TextField(
           controller: _passwordController,
           obscureText: true,
-          decoration: const InputDecoration(
-            labelText: 'Senha',
-          ),
         ),
         const SizedBox(height: 24),
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: _login,
-            child: const Text('Enviar'),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(
+                  const Color.fromARGB(255, 255, 115, 0)),
+              foregroundColor: WidgetStateProperty.all(Colors.white),
+            ),
+            child: const Text('ACESSAR'),
           ),
         ),
         if (_errorMessage != null) ...[
@@ -100,6 +131,7 @@ class _AuthFormState extends State<AuthForm> {
           ),
         ],
       ],
+    ),
     );
   }
 
