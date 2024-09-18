@@ -38,7 +38,6 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             BottomAppBar(
-              padding: EdgeInsets.all(0),
               color: Colors.white,
               shape: const CircularNotchedRectangle(),
               child: Row(
@@ -68,7 +67,7 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                     width: 70,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 152, 7),
+                      color: Color.fromARGB(255, 118, 197, 0),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
@@ -92,7 +91,7 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.list,
+                      Icons.settings,
                       size: 25,
                       color: widget.currentIndex == 2
                           ? Color.fromARGB(255, 0, 108, 209)
