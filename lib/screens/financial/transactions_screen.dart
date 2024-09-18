@@ -1,4 +1,3 @@
-import 'package:dream_flow/screens/partials/gradient_begin.dart';
 import 'package:dream_flow/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/screens/financial/widgets/transactions.dart';

@@ -24,16 +24,19 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xff18202b), Color(0xFF090C11)],
+            colors: [
+              Color.fromARGB(255, 0, 108, 209),
+              Color.fromARGB(255, 1, 13, 121)
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26,
+              color: Color.fromARGB(50, 0, 0, 0),
               spreadRadius: 1,
-              blurRadius: 10,
-              offset: Offset(0, -4),
+              blurRadius: 15,
+              offset: Offset(0, -5),
             ),
           ],
         ),
@@ -66,7 +69,7 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                   ),
                   Ink(
                     decoration: const ShapeDecoration(
-                      color: Colors.lightBlue,
+                      color: Color.fromARGB(255, 255, 152, 7),
                       shape: CircleBorder(),
                     ),
                     child: IconButton(

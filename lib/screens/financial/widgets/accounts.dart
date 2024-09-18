@@ -39,7 +39,9 @@ class _AccountsSectionState extends State<AccountsSection> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Erro: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
+        } else if (!snapshot.hasData ||
+            snapshot.data == null ||
+            snapshot.data!.isEmpty) {
           return const Center(child: Text('Nenhuma conta encontrada.'));
         }
 
@@ -50,9 +52,9 @@ class _AccountsSectionState extends State<AccountsSection> {
           child: Row(
             children: accounts.map((account) {
               return Padding(
-                padding: const EdgeInsets.only(left: 10.0), // Espaçamento horizontal
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 15),
                 child: SizedBox(
-                  width: (MediaQuery.of(context).size.width - 30) / 2,
+                  width: (MediaQuery.of(context).size.width - 100) / 2,
                   child: _buildAccountCard(
                     account['institution_id']!,
                     account['name']!,
@@ -72,56 +74,56 @@ class _AccountsSectionState extends State<AccountsSection> {
   }
 
   Widget _buildAccountCard(int institutionId, String accountName) {
-  return Container(
-    height: 55, // Ajuste a altura conforme necessário
-    padding: const EdgeInsets.all(8.0),
-    decoration: const BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-      boxShadow: [
-        BoxShadow(
-          color: Color.fromARGB(30, 0, 0, 0),
-          blurRadius: 25,
-          offset: Offset(0, 0),
-        ),
-      ],
-    ),
-    child: Row(
-      children: [
-        // Imagem da instituição
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.network(
-            _getImageUrl(institutionId),
-            width: 40,
-            height: 40,
-            fit: BoxFit.cover,
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(20, 0, 0, 0),
+            blurRadius: 10,
+            offset: Offset(0, 5),
           ),
-        ),
-        const SizedBox(width: 10), // Espaço entre a imagem e os textos
-
-        // Textos (nome da conta e saldo)
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center, // Centraliza verticalmente
-            children: [
-              Text(
-                accountName,
-                style: Theme.of(context).textTheme.titleSmall,
-                maxLines: 1, // Limita a 1 linha
-                overflow: TextOverflow.ellipsis, // Adiciona "..." se o texto for maior que o espaço disponível
-              ),
-              Text(
-                '******', // Placeholder para o saldo
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
+        ],
+      ),
+      child: Row(
+        children: [
+          // Imagem da instituição
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              _getImageUrl(institutionId),
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+          const SizedBox(width: 10), // Espaço entre a imagem e os textos
 
+          // Textos (nome da conta e saldo)
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Centraliza verticalmente
+              children: [
+                Text(
+                  accountName,
+                  style: Theme.of(context).textTheme.titleSmall,
+                  maxLines: 1, // Limita a 1 linha
+                  overflow: TextOverflow
+                      .ellipsis, // Adiciona "..." se o texto for maior que o espaço disponível
+                ),
+                Text(
+                  '******', // Placeholder para o saldo
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

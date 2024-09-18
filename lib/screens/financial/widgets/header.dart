@@ -28,7 +28,8 @@ class _HeaderUserSectionState extends State<HeaderUserSection> {
   Future<void> _logout() async {
     await UserModel.clearPreferences(); // Limpa as preferências
     if (!mounted) return; // Verifica se o widget ainda está montado
-    Navigator.pushReplacementNamed(context, '/login'); // Redireciona para a tela de login
+    Navigator.pushReplacementNamed(
+        context, '/login'); // Redireciona para a tela de login
   }
 
   @override
