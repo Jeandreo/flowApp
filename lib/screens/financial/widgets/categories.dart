@@ -6,7 +6,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Categories extends StatefulWidget {
-  const Categories({super.key});
+  final Function(Color color, String icon, String name) onCategorySelected;
+
+  const Categories({super.key, required this.onCategorySelected});
 
   @override
   State<Categories> createState() => _CategoriesState();
@@ -77,6 +79,15 @@ class _CategoriesState extends State<Categories> {
                       String selectedColor = category.color;
                       String selectedIcon = category.icon;
                       int selectedId = category.id;
+
+                      // Passa as informações da categoria selecionada para o TransactionForm
+                      widget.onCategorySelected(
+                        Color(int.parse(selectedColor.substring(1, 7),
+                                radix: 16) +
+                            0xFF000000),
+                        selectedIcon,
+                        category.name,
+                      );
                     });
                     Navigator.of(context).pop(); // Fecha o dialog
                   },

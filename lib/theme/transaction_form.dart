@@ -1,8 +1,8 @@
-import 'package:dream_flow/screens/_partials/indicator_close.dart';
-import 'package:dream_flow/screens/financial/widgets/categories.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:dream_flow/utils/utils.dart';
+import 'package:dream_flow/screens/financial/widgets/categories.dart';
+import 'package:dream_flow/screens/_partials/indicator_close.dart';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
@@ -20,6 +20,10 @@ class _TransactionFormState extends State<TransactionForm> {
   String? _selectedRecurrence;
   DateTime? _selectedDate;
 
+  Color? _selectedCategoryColor;
+  String? _selectedCategoryIcon;
+  String? _selectedCategoryName;
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +34,15 @@ class _TransactionFormState extends State<TransactionForm> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Categories();
+        return Categories(
+          onCategorySelected: (color, icon, name) {
+            setState(() {
+              _selectedCategoryColor = color;
+              _selectedCategoryIcon = icon;
+              _selectedCategoryName = name;
+            });
+          },
+        );
       },
     );
   }
@@ -142,11 +154,13 @@ class _TransactionFormState extends State<TransactionForm> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.amber,
+                              color: _selectedCategoryColor ?? Colors.amber,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
-                              Icons.favorite,
+                              _selectedCategoryIcon != null
+                                  ? getIconAwsome(_selectedCategoryIcon!)
+                                  : Icons.favorite,
                               color: Colors.white,
                               size: 22,
                             ),
@@ -154,7 +168,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           SizedBox(width: 8),
                           Container(
                             child: Text(
-                              'Selecione um ícone',
+                              _selectedCategoryName ?? 'Selecione um ícone',
                               maxLines: 1,
                               style: TextStyle(
                                 fontSize: 14,
@@ -187,7 +201,8 @@ class _TransactionFormState extends State<TransactionForm> {
                           _selectedInstallments = value;
                         });
                       },
-                      items: ['À vista', '2x', '3x', '4x', '5x'].map((installment) {
+                      items: ['À vista', '2x', '3x', '4x', '5x']
+                          .map((installment) {
                         return DropdownMenuItem(
                           value: installment,
                           child: Text(installment),
