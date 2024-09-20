@@ -1,3 +1,4 @@
+import 'package:dream_flow/models/category_model.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -39,15 +40,20 @@ class _TransactionFormState extends State<TransactionForm> {
         print(categories);
       });
     } catch (error) {
-      // Exiba uma mensagem de erro se necessário
+      print(error);
     }
   }
 
-  Future<List<dynamic>> _fetchCategories() async {
-    final response = await http.get(
-        Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
+  Future<List<CategoryModel>> _fetchCategories() async {
+    final response = await http.get(Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => CategoryModel(
+        id: data['id'],
+        name: data['name'],
+        icon: data['icon'] ?? '',
+        color: data['color'] ?? '',
+      )).toList();
     } else {
       throw Exception('Falha ao carregar categorias');
     }
@@ -87,49 +93,48 @@ class _TransactionFormState extends State<TransactionForm> {
                 ),
                 itemCount: _categories.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final category = _categories[index];
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedCategory = category['name'].toString();
-                      });
-                      Navigator.of(context).pop(); // Fecha o dialog
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Color(int.parse(
-                                    category['color']!.substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            getIconAwsome(category['icon'].toString()),
-                            color: Colors.white,
-                            size: 25, // Tamanho do ícone
-                          ),
+                final category = _categories[index] as CategoryModel;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedCategory = category.name;
+                      String selectedColor = category.color;
+                      String selectedIcon = category.icon;
+                      int selectedId = category.id;
+                    });
+                    Navigator.of(context).pop(); // Fecha o dialog
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(int.parse(category.color.substring(1, 7), radix: 16) + 0xFF000000),
+                          shape: BoxShape.circle,
                         ),
-                        SizedBox(height: 4),
-                        Container(
-                          constraints: BoxConstraints(maxWidth: 60),
-                          child: Text(
-                            category['name'].toString(),
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
+                        child: Icon(
+                          getIconAwsome(category.icon),
+                          color: Colors.white,
+                          size: 25, // Tamanho do ícone
                         ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                      SizedBox(height: 4),
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 60),
+                        child: Text(
+                          category.name,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
               ),
             )
           ],

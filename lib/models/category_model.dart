@@ -1,7 +1,7 @@
 class CategoryModel {
   final String name;
   final String color;
-  final String id;
+  final int id;
   final String icon;
 
   CategoryModel({
