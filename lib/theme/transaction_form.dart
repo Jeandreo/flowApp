@@ -111,18 +111,29 @@ class _TransactionFormState extends State<TransactionForm> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: _selectedCategoryColor ?? Colors.black26,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              _selectedCategoryIcon != null
-                                  ? getIconAwsome(_selectedCategoryIcon!)
-                                  : Icons.wallet,
-                              color: Colors.white,
-                              size: 22,
-                            ),
+                            child: _selectedWalletUrl == null
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      color: _selectedCategoryColor ??
+                                          Colors.black26,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.wallet,
+                                      color: Colors.white,
+                                      size: 22,
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      _selectedWalletUrl!,
+                                      width: 40,
+                                      height: 40,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                           ),
                           SizedBox(width: 8),
                           Container(
