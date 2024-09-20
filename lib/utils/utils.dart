@@ -15,6 +15,14 @@ String capitalize(String text) {
 }
 
 
+String forceFormatCurrency(String value) {
+  value = value.replaceAll(RegExp(r'[^\d]'), '');
+  if (value.isEmpty) return '';
+  double parsedValue = double.parse(value) / 100;
+  return NumberFormat.currency(locale: 'pt_BR', symbol: '')
+      .format(parsedValue);
+}
+
 IconData getIconAwsome(String? iconName) {
   switch (iconName) {
     case 'fa-solid fa-piggy-bank':

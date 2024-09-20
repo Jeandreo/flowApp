@@ -1,7 +1,9 @@
-import 'dart:convert';
+import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:dream_flow/utils/utils.dart';
+import 'dart:convert';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
@@ -18,15 +20,38 @@ class _TransactionFormState extends State<TransactionForm> {
   String? _selectedInstallments;
   String? _selectedRecurrence;
   DateTime? _selectedDate;
-
+  String? _selectedCategory;
+  List<dynamic> _categories = [];
   final List<String> _installments = ['À vista', '2x', '3x', '4x', '5x'];
   final List<String> _recurrences = ['Sim', 'Não'];
 
   @override
   void initState() {
     super.initState();
+    _loadCategories();
   }
 
+  Future<void> _loadCategories() async {
+    try {
+      final categories = await _fetchCategories();
+      setState(() {
+        _categories = categories;
+        print(categories);
+      });
+    } catch (error) {
+      // Exiba uma mensagem de erro se necessário
+    }
+  }
+
+  Future<List<dynamic>> _fetchCategories() async {
+    final response = await http.get(
+        Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Falha ao carregar categorias');
+    }
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -42,6 +67,77 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
+  void _showCategoryDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          children: [
+            IndicatorClose(),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              width: double.maxFinite,
+              height: 470, // Defina uma altura máxima
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 16.0,
+                  mainAxisSpacing: 16.0,
+                ),
+                itemCount: _categories.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final category = _categories[index];
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedCategory = category['name'].toString();
+                      });
+                      Navigator.of(context).pop(); // Fecha o dialog
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Color(int.parse(
+                                    category['color']!.substring(1, 7),
+                                    radix: 16) +
+                                0xFF000000),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            getIconAwsome(category['icon'].toString()),
+                            color: Colors.white,
+                            size: 25, // Tamanho do ícone
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 60),
+                          child: Text(
+                            category['name'].toString(),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,6 +146,10 @@ class _TransactionFormState extends State<TransactionForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          Align(
+            alignment: Alignment.center, // Alinha ao centro
+            child: IndicatorClose(),
+          ),
           Text(
             'Descrição:',
             style: Theme.of(context).textTheme.titleSmall,
@@ -61,13 +161,14 @@ class _TransactionFormState extends State<TransactionForm> {
 
           // Método e Valor lado a lado
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Método:',
+                      'Pago Com',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
@@ -86,10 +187,11 @@ class _TransactionFormState extends State<TransactionForm> {
                       controller: _valueController,
                       keyboardType: TextInputType.number,
                       onChanged: (value) {
-                        String formattedValue = _formatCurrency(value);
+                        String formattedValue = forceFormatCurrency(value);
                         _valueController.value = TextEditingValue(
                           text: formattedValue,
-                          selection: TextSelection.collapsed(offset: formattedValue.length),
+                          selection: TextSelection.collapsed(
+                              offset: formattedValue.length),
                         );
                       },
                     ),
@@ -99,9 +201,8 @@ class _TransactionFormState extends State<TransactionForm> {
             ],
           ),
           SizedBox(height: 16),
-
-          // Data e Categoria lado a lado
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
@@ -134,14 +235,44 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Categoria:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        _showCategoryDialog(context);
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.favorite,
+                              color: Colors.white,
+                              size: 22,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Container(
+                            child: Text(
+                              _selectedCategory ?? 'Selecione um ícone',
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16),
 
-          // Parcelamento e Recorrente lado a lado
           Row(
             children: [
               Expanded(
@@ -169,7 +300,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ],
                 ),
               ),
-              SizedBox(width: 16), // Espaçamento entre Parcelamento e Recorrente
+              SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,28 +336,20 @@ class _TransactionFormState extends State<TransactionForm> {
           ),
           TextField(
             controller: _observationController,
-            maxLines: 3,
+            maxLines: 2,
           ),
           SizedBox(height: 16),
-
           Center(
             child: ElevatedButton(
               onPressed: () {
                 // Adicione a ação desejada aqui
               },
-              child: Text('Salvar'),
+              child: Text('Sa2lvar'),
             ),
           ),
+          SizedBox(height: 20),
         ],
       ),
     );
-  }
-
-  // Função para formatar o valor para o formato de moeda brasileiro
-  String _formatCurrency(String value) {
-    value = value.replaceAll(RegExp(r'[^\d]'), '');
-    if (value.isEmpty) return '';
-    double parsedValue = double.parse(value) / 100;
-    return NumberFormat.currency(locale: 'pt_BR', symbol: '').format(parsedValue);
   }
 }
