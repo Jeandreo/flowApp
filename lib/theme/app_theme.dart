@@ -34,12 +34,25 @@ ThemeData buildThemeData(context) {
           fontSize: 18,
           color: Color(0xff7e8299)),
     ),
+    // inputDecorationTheme: const InputDecorationTheme(
+    //   filled: true,
+    //   fillColor: Colors.white,
+    //   contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+    //   enabledBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.all(Radius.circular(30)),
+    //     borderSide: BorderSide.none,
+    //   ),
+    //   focusedBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.all(Radius.circular(20)),
+    //     borderSide: BorderSide.none,
+    //   ),
+    // ),
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: Color.fromARGB(255, 236, 236, 236),
       contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(30)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(

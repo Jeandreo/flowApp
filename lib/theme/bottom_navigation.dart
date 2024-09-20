@@ -1,6 +1,6 @@
 // lib/bottom_navigation_layout.dart
 import 'package:flutter/material.dart';
-import 'add_options_modal.dart';
+import 'options_button.dart';
 
 class BottomNavigationLayout extends StatefulWidget {
   final Widget child;
@@ -19,13 +19,13 @@ class BottomNavigationLayout extends StatefulWidget {
 }
 
 class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
-  void _showAddOptions() {
+  void _nabBottomOptions() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return AddOptionsModal();
+        return NavBottomOptionsModal();
       },
     );
   }
@@ -85,7 +85,7 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                     child: Center(
                       child: IconButton(
                         icon: const Icon(Icons.add_circle_sharp, size: 30, color: Colors.white),
-                        onPressed: _showAddOptions,
+                        onPressed: _nabBottomOptions,
                       ),
                     ),
                   ),

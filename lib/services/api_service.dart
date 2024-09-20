@@ -37,7 +37,7 @@ Future<void> login(String email, String password) async {
 }
 
 
-Future<Map<String, dynamic>> fetchTransactions(String url) async {
+Future<Map<String, dynamic>> requestApi(String url) async {
   // Obtém o token armazenado
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('authToken');
@@ -51,7 +51,7 @@ Future<Map<String, dynamic>> fetchTransactions(String url) async {
     Uri.parse(url),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',  // Token no cabeçalho
+      'Authorization': 'Bearer $token',
     },
   );
 

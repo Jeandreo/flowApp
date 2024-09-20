@@ -1,9 +1,10 @@
 // lib/add_options_modal.dart
+import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:dream_flow/theme/transaction_form.dart';
 import 'package:flutter/material.dart';
 
-class AddOptionsModal extends StatelessWidget {
-  const AddOptionsModal({Key? key}) : super(key: key);
+class NavBottomOptionsModal extends StatelessWidget {
+  const NavBottomOptionsModal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +16,7 @@ class AddOptionsModal extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Indicador de arrastar
-          Container(
-            height: 5,
-            width: 40,
-            margin: EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.grey[400],
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+          IndicatorClose(),
           Padding(
             padding: EdgeInsets.fromLTRB(50, 30, 50, 30),
             child: Column(
@@ -37,14 +29,10 @@ class AddOptionsModal extends StatelessWidget {
                 _buildOptionButton(Icons.add, 'Receita', Colors.green,
                     () => _showTransactionForm(context)),
                 SizedBox(height: 10),
-                _buildOptionButton(Icons.remove, 'Despesa', Colors.red, () {
-                  // Ação para 'Despesa'
-                }),
+                _buildOptionButton(Icons.remove, 'Despesa', Colors.red, () {}),
                 SizedBox(height: 10),
                 _buildOptionButton(Icons.transfer_within_a_station,
-                    'Transferência', Colors.blue, () {
-                  // Ação para 'Transferência'
-                }),
+                    'Transferência', Colors.blue, () {}),
                 SizedBox(height: 30),
               ],
             ),
@@ -54,23 +42,7 @@ class AddOptionsModal extends StatelessWidget {
     );
   }
 
-  void _showTransactionForm(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-          ),
-          child: TransactionForm(),
-        );
-      },
-    );
-  }
-
+  // Formata os botões do footer
   Widget _buildOptionButton(
       IconData icon, String label, Color color, VoidCallback onPressed) {
     return OutlinedButton(
@@ -96,4 +68,23 @@ class AddOptionsModal extends StatelessWidget {
       ),
     );
   }
+
+  // Abre o formulário de receita
+  void _showTransactionForm(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+          ),
+          child: TransactionForm(),
+        );
+      },
+    );
+  }
+  
 }

@@ -5,7 +5,6 @@ import 'package:intl/intl.dart'; // Para formatar a data
 
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key});
-
   @override
   State<TransactionsSection> createState() => _TransactionsSectionState();
 }
@@ -16,10 +15,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   @override
   void initState() {
     super.initState();
-    // Carrega os dados da API
-    _transactionsFuture = fetchTransactions(
-            'https://flow.dreamake.com.br/api/financeiro/transacoes')
-        .then((data) => data['transactions'] as List<dynamic>);
+    _transactionsFuture = requestApi('https://flow.dreamake.com.br/api/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
   }
 
   @override
@@ -39,8 +35,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
 
         final transactions = snapshot.data!;
 
-        return Expanded(
-          child: ListView.builder(
+        return ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (context, index) {
               final transaction = transactions[index];
@@ -53,8 +48,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                 transaction['fature'],
               );
             },
-          ),
-        );
+          );
       },
     );
   }
@@ -70,12 +64,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
 
     // Formatar a data de pagamento
-    final formattedDate =
-        DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
-    final displayfatherColor = fature == 1
-        ? Colors.orange
-        : Color(
-            int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
+    final displayfatherColor = fature == 1 ? Colors.orange : Color(int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
     final displayIcon = fature == 1 ? Icons.receipt : getIconAwsome(iconName);
 
     return Container(
@@ -113,7 +103,6 @@ class _TransactionsSectionState extends State<TransactionsSection> {
               ],
             ),
           ),
-          // Valor à direita
           Text(
             formattedAmount,
             style: TextStyle(
