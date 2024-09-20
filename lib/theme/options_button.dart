@@ -86,5 +86,4 @@ class NavBottomOptionsModal extends StatelessWidget {
       },
     );
   }
-  
 }

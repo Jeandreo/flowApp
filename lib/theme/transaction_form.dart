@@ -1,3 +1,5 @@
+import 'package:dream_flow/models/wallet_model.dart';
+import 'package:dream_flow/screens/financial/widgets/walletsCredits.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/utils/utils.dart';
@@ -24,6 +26,9 @@ class _TransactionFormState extends State<TransactionForm> {
   String? _selectedCategoryIcon;
   String? _selectedCategoryName;
 
+  String? _selectedWalletUrl;
+  String? _selectedWalletName;
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +52,25 @@ class _TransactionFormState extends State<TransactionForm> {
     );
   }
 
+  // Carrega o modal das categorias
+  void _showPaymentDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return WalletsCredits(
+          onAccountSelected: (name, url) {
+            setState(() {
+              _selectedWalletName = name;
+              _selectedWalletUrl = url;
+              print(name);
+              print(url);
+            });
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,19 +80,18 @@ class _TransactionFormState extends State<TransactionForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Align(
-            alignment: Alignment.center, // Alinha ao centro
+            alignment: Alignment.center,
             child: IndicatorClose(),
           ),
           Text(
             'Descrição:',
             style: Theme.of(context).textTheme.titleSmall,
           ),
+          SizedBox(height: 5),
           TextField(
             controller: _descriptionController,
           ),
-          SizedBox(height: 16),
-
-          // Método e Valor lado a lado
+          SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -77,8 +100,44 @@ class _TransactionFormState extends State<TransactionForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Pago Com',
+                      'Pago com:',
                       style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () {
+                        _showPaymentDialog(context);
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: _selectedCategoryColor ?? Colors.black26,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              _selectedCategoryIcon != null
+                                  ? getIconAwsome(_selectedCategoryIcon!)
+                                  : Icons.wallet,
+                              color: Colors.white,
+                              size: 22,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Container(
+                            width: 130,
+                            child: Text(
+                              _selectedWalletName ?? 'Selecione',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -92,6 +151,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Valor:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    SizedBox(height: 5),
                     TextField(
                       controller: _valueController,
                       keyboardType: TextInputType.number,
@@ -109,7 +169,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -121,6 +181,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Data da Compra:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    SizedBox(height: 5),
                     TextField(
                       readOnly: true,
                       decoration: InputDecoration(
@@ -135,7 +196,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ],
                 ),
               ),
-              SizedBox(width: 16), // Espaçamento entre Data e Categoria
+              SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +205,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Categoria:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 15),
                     GestureDetector(
                       onTap: () {
                         _showCategoryDialog(context);
@@ -154,21 +215,23 @@ class _TransactionFormState extends State<TransactionForm> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: _selectedCategoryColor ?? Colors.amber,
+                              color: _selectedCategoryColor ?? Colors.black26,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
                               _selectedCategoryIcon != null
                                   ? getIconAwsome(_selectedCategoryIcon!)
-                                  : Icons.favorite,
+                                  : Icons.list,
                               color: Colors.white,
                               size: 22,
                             ),
                           ),
                           SizedBox(width: 8),
                           Container(
+                            width: 130,
                             child: Text(
-                              _selectedCategoryName ?? 'Selecione um ícone',
+                              _selectedCategoryName ?? 'Selecione uma opção',
+                              overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
                                 fontSize: 14,
@@ -183,7 +246,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
             ],
           ),
-
+          SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -194,15 +257,16 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Parcelamento:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    SizedBox(height: 5),
                     DropdownButtonFormField<String>(
                       value: _selectedInstallments,
+                      hint: Text('Não'),
                       onChanged: (value) {
                         setState(() {
                           _selectedInstallments = value;
                         });
                       },
-                      items: ['À vista', '2x', '3x', '4x', '5x']
-                          .map((installment) {
+                      items: ['Não', 'Sim'].map((installment) {
                         return DropdownMenuItem(
                           value: installment,
                           child: Text(installment),
@@ -221,8 +285,10 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Recorrente?',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    SizedBox(height: 5),
                     DropdownButtonFormField<String>(
                       value: _selectedRecurrence,
+                      hint: Text('Não'),
                       onChanged: (value) {
                         setState(() {
                           _selectedRecurrence = value;
@@ -240,23 +306,34 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
             ],
           ),
-          SizedBox(height: 16),
-
+          SizedBox(height: 10),
           Text(
             'Observação:',
             style: Theme.of(context).textTheme.titleSmall,
           ),
+          SizedBox(height: 5),
           TextField(
             controller: _observationController,
             maxLines: 2,
           ),
           SizedBox(height: 16),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                // Adicione a ação desejada aqui
-              },
-              child: Text('Sa2lvar'),
+          ElevatedButton(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: const Color.fromARGB(255, 143, 197, 6)),
+              minimumSize: Size(double.infinity, 60),
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              backgroundColor: const Color.fromARGB(255, 152, 209, 6),
+              elevation: 0,
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Adicionar Transação',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 20),
