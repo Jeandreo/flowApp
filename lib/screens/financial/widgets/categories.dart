@@ -7,16 +7,13 @@ import 'dart:convert';
 
 class Categories extends StatefulWidget {
   final Function(Color color, String icon, String name) onCategorySelected;
-
   const Categories({super.key, required this.onCategorySelected});
-
   @override
   State<Categories> createState() => _CategoriesState();
 }
 
 class _CategoriesState extends State<Categories> {
   List<dynamic> _categories = [];
-  String? _selectedCategory;
 
   void initState() {
     super.initState();
@@ -28,7 +25,6 @@ class _CategoriesState extends State<Categories> {
       final categories = await _fetchCategories();
       setState(() {
         _categories = categories;
-        print(categories);
       });
     } catch (error) {
       print(error);
@@ -36,8 +32,7 @@ class _CategoriesState extends State<Categories> {
   }
 
   Future<List<CategoryModel>> _fetchCategories() async {
-    final response = await http.get(
-        Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
+    final response = await http.get(Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       return jsonResponse
@@ -61,7 +56,7 @@ class _CategoriesState extends State<Categories> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           width: double.maxFinite,
-          height: 470, // Defina uma altura máxima
+          height: 470,
           child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
@@ -75,16 +70,10 @@ class _CategoriesState extends State<Categories> {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
-                      _selectedCategory = category.name;
                       String selectedColor = category.color;
                       String selectedIcon = category.icon;
-                      int selectedId = category.id;
-
-                      // Passa as informações da categoria selecionada para o TransactionForm
                       widget.onCategorySelected(
-                        Color(int.parse(selectedColor.substring(1, 7),
-                                radix: 16) +
-                            0xFF000000),
+                        Color(int.parse(selectedColor.substring(1, 7), radix: 16) + 0xFF000000),
                         selectedIcon,
                         category.name,
                       );
