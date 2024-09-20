@@ -1,10 +1,8 @@
-import 'package:dream_flow/models/category_model.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
+import 'package:dream_flow/screens/financial/widgets/categories.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:dream_flow/utils/utils.dart';
-import 'dart:convert';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
@@ -21,124 +19,18 @@ class _TransactionFormState extends State<TransactionForm> {
   String? _selectedInstallments;
   String? _selectedRecurrence;
   DateTime? _selectedDate;
-  String? _selectedCategory;
-  List<dynamic> _categories = [];
-  final List<String> _installments = ['À vista', '2x', '3x', '4x', '5x'];
-  final List<String> _recurrences = ['Sim', 'Não'];
 
   @override
   void initState() {
     super.initState();
-    _loadCategories();
   }
 
-  Future<void> _loadCategories() async {
-    try {
-      final categories = await _fetchCategories();
-      setState(() {
-        _categories = categories;
-        print(categories);
-      });
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  Future<List<CategoryModel>> _fetchCategories() async {
-    final response = await http.get(Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
-    if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = json.decode(response.body);
-      return jsonResponse.map((data) => CategoryModel(
-        id: data['id'],
-        name: data['name'],
-        icon: data['icon'] ?? '',
-        color: data['color'] ?? '',
-      )).toList();
-    } else {
-      throw Exception('Falha ao carregar categorias');
-    }
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
-
+  // Carrega o modal das categorias
   void _showCategoryDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Column(
-          children: [
-            IndicatorClose(),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-              width: double.maxFinite,
-              height: 470, // Defina uma altura máxima
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                ),
-                itemCount: _categories.length,
-                itemBuilder: (BuildContext context, int index) {
-                final category = _categories[index] as CategoryModel;
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedCategory = category.name;
-                      String selectedColor = category.color;
-                      String selectedIcon = category.icon;
-                      int selectedId = category.id;
-                    });
-                    Navigator.of(context).pop(); // Fecha o dialog
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(int.parse(category.color.substring(1, 7), radix: 16) + 0xFF000000),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          getIconAwsome(category.icon),
-                          color: Colors.white,
-                          size: 25, // Tamanho do ícone
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 60),
-                        child: Text(
-                          category.name,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }
-
-              ),
-            )
-          ],
-        );
+        return Categories();
       },
     );
   }
@@ -225,7 +117,7 @@ class _TransactionFormState extends State<TransactionForm> {
                             : 'Data: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}',
                       ),
                       onTap: () {
-                        _selectDate(context);
+                        // _selectDate(context);
                       },
                     ),
                   ],
@@ -262,7 +154,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           SizedBox(width: 8),
                           Container(
                             child: Text(
-                              _selectedCategory ?? 'Selecione um ícone',
+                              'Selecione um ícone',
                               maxLines: 1,
                               style: TextStyle(
                                 fontSize: 14,
@@ -295,7 +187,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           _selectedInstallments = value;
                         });
                       },
-                      items: _installments.map((installment) {
+                      items: ['À vista', '2x', '3x', '4x', '5x'].map((installment) {
                         return DropdownMenuItem(
                           value: installment,
                           child: Text(installment),
@@ -321,7 +213,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           _selectedRecurrence = value;
                         });
                       },
-                      items: _recurrences.map((recurrence) {
+                      items: ['Sim', 'Não'].map((recurrence) {
                         return DropdownMenuItem(
                           value: recurrence,
                           child: Text(recurrence),
