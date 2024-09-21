@@ -6,7 +6,7 @@ class AccountsSection extends StatefulWidget {
   const AccountsSection({super.key});
 
   @override
-  _AccountsSectionState createState() => _AccountsSectionState();
+  State<AccountsSection> createState() => _AccountsSectionState();
 }
 
 class _AccountsSectionState extends State<AccountsSection> {

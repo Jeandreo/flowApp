@@ -25,7 +25,7 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return NavBottomOptionsModal();
+        return const NavBottomOptionsModal();
       },
     );
   }
@@ -60,8 +60,8 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                       Icons.dashboard,
                       size: 25,
                       color: widget.currentIndex == 0
-                          ? Color.fromARGB(255, 0, 171, 209)
-                          : Color.fromARGB(255, 58, 75, 114),
+                          ? const Color.fromARGB(255, 0, 171, 209)
+                          : const Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(0),
                   ),
@@ -70,8 +70,8 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                       Icons.task,
                       size: 25,
                       color: widget.currentIndex == 1
-                          ? Color.fromARGB(255, 0, 108, 209)
-                          : Color.fromARGB(255, 58, 75, 114),
+                          ? const Color.fromARGB(255, 0, 108, 209)
+                          : const Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(1),
                   ),
@@ -79,7 +79,7 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                     width: 70,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 118, 197, 0),
+                      color: const Color.fromARGB(255, 118, 197, 0),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
@@ -94,8 +94,8 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                       Icons.list,
                       size: 25,
                       color: widget.currentIndex == 2
-                          ? Color.fromARGB(255, 0, 108, 209)
-                          : Color.fromARGB(255, 58, 75, 114),
+                          ? const Color.fromARGB(255, 0, 108, 209)
+                          : const Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(2),
                   ),
@@ -104,8 +104,8 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                       Icons.settings,
                       size: 25,
                       color: widget.currentIndex == 3
-                          ? Color.fromARGB(255, 0, 108, 209)
-                          : Color.fromARGB(255, 58, 75, 114),
+                          ? const Color.fromARGB(255, 0, 108, 209)
+                          : const Color.fromARGB(255, 58, 75, 114),
                     ),
                     onPressed: () => widget.onItemTapped(3),
                   ),

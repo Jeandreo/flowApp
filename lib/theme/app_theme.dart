@@ -60,7 +60,7 @@ ThemeData buildThemeData(context) {
         borderSide: BorderSide.none,
       ),
     ),
-    bottomSheetTheme: BottomSheetThemeData(
+    bottomSheetTheme: const BottomSheetThemeData(
       backgroundColor: Colors.white, // Defina a cor de fundo padrão aqui
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

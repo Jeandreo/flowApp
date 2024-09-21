@@ -1,8 +1,8 @@
-import 'package:dream_flow/models/wallet_model.dart';
-import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:dream_flow/models/wallet_model.dart';
+import 'package:dream_flow/screens/_partials/indicator_close.dart';
 
 class WalletsCredits extends StatefulWidget {
   final Function(String name, String url) onAccountSelected;
@@ -14,6 +14,7 @@ class WalletsCredits extends StatefulWidget {
 class _WalletsCreditsState extends State<WalletsCredits> {
   List<dynamic> _walletsCredits = [];
 
+  @override
   void initState() {
     super.initState();
     _loadWalletsCredits();
@@ -56,13 +57,13 @@ class _WalletsCreditsState extends State<WalletsCredits> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IndicatorClose(),
+        const IndicatorClose(),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           width: double.maxFinite,
           height: 470,
           child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
                 crossAxisSpacing: 20.0,
@@ -97,13 +98,13 @@ class _WalletsCreditsState extends State<WalletsCredits> {
                         ),
                       ),
                       Container(
-                        constraints: BoxConstraints(maxWidth: 60),
+                        constraints: const BoxConstraints(maxWidth: 60),
                         child: Text(
                           walletsCredit.name,
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ),
                     ],

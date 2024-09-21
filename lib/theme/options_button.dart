@@ -9,31 +9,31 @@ class NavBottomOptionsModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IndicatorClose(),
+          const IndicatorClose(),
           Padding(
-            padding: EdgeInsets.fromLTRB(50, 30, 50, 30),
+            padding: const EdgeInsets.fromLTRB(50, 30, 50, 30),
             child: Column(
               children: [
                 Text(
                   'O que deseja adicionar?',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildOptionButton(Icons.add, 'Receita', Colors.green,
                     () => _showTransactionForm(context)),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _buildOptionButton(Icons.remove, 'Despesa', Colors.red, () {}),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _buildOptionButton(Icons.transfer_within_a_station,
                     'Transferência', Colors.blue, () {}),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -48,8 +48,8 @@ class NavBottomOptionsModal extends StatelessWidget {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: color),
-        minimumSize: Size(double.infinity, 60),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        minimumSize: const Size(double.infinity, 60),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       ),
       onPressed: onPressed,
       child: Row(
@@ -77,11 +77,11 @@ class NavBottomOptionsModal extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
           ),
-          child: TransactionForm(),
+          child: const TransactionForm(),
         );
       },
     );

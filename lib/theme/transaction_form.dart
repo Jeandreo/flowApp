@@ -1,4 +1,4 @@
-import 'package:dream_flow/models/wallet_model.dart';
+import 'dart:convert';
 import 'package:dream_flow/screens/financial/widgets/walletsCredits.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
 
   @override
-  _TransactionFormState createState() => _TransactionFormState();
+  State<TransactionForm> createState() => _TransactionFormState();
 }
 
 class _TransactionFormState extends State<TransactionForm> {
@@ -28,47 +28,58 @@ class _TransactionFormState extends State<TransactionForm> {
 
   String? _selectedWalletUrl;
   String? _selectedWalletName;
+  
+  get http => null;
 
   @override
   void initState() {
     super.initState();
   }
 
-  // Carrega o modal das categorias
-  void _showCategoryDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Categories(
-          onCategorySelected: (color, icon, name) {
-            setState(() {
-              _selectedCategoryColor = color;
-              _selectedCategoryIcon = icon;
-              _selectedCategoryName = name;
-            });
-          },
-        );
+  // Função que envia a transação para a API
+  Future<void> _addTransaction() async {
+    // Montar os dados que serão enviados
+    final transactionData = {
+      'description': _descriptionController.text,
+      'value': _valueController.text,
+      'observation': _observationController.text,
+      'installments': _selectedInstallments,
+      'recurrence': _selectedRecurrence,
+      'date': _selectedDate != null
+          ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
+          : null,
+      'category': {
+        'name': _selectedCategoryName,
+        'color': _selectedCategoryColor?.value.toString(),
+        'icon': _selectedCategoryIcon,
       },
-    );
-  }
+      'wallet': {
+        'name': _selectedWalletName,
+        'url': _selectedWalletUrl,
+      },
+    };
 
-  // Carrega o modal das categorias
-  void _showPaymentDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return WalletsCredits(
-          onAccountSelected: (name, url) {
-            setState(() {
-              _selectedWalletName = name;
-              _selectedWalletUrl = url;
-              print(name);
-              print(url);
-            });
-          },
-        );
-      },
-    );
+    final url = Uri.parse('https://sua-api.com/transacoes'); // Substitua pela URL da sua API
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(transactionData),
+      );
+
+      if (response.statusCode == 201) {
+        // Sucesso ao adicionar transação
+        print('Transação adicionada com sucesso');
+      } else {
+        // Erro na requisição
+        print('Erro ao adicionar transação: ${response.body}');
+      }
+    } catch (error) {
+      print('Erro ao enviar requisição: $error');
+    }
   }
 
   @override
@@ -79,7 +90,7 @@ class _TransactionFormState extends State<TransactionForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Align(
+          const Align(
             alignment: Alignment.center,
             child: IndicatorClose(),
           ),
@@ -87,11 +98,11 @@ class _TransactionFormState extends State<TransactionForm> {
             'Descrição:',
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           TextField(
             controller: _descriptionController,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,10 +114,24 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Pago com:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     GestureDetector(
                       onTap: () {
-                        _showPaymentDialog(context);
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return WalletsCredits(
+                              onAccountSelected: (name, url) {
+                                setState(() {
+                                  _selectedWalletName = name;
+                                  _selectedWalletUrl = url;
+                                  print(name);
+                                  print(url);
+                                });
+                              },
+                            );
+                          },
+                        );
                       },
                       child: Row(
                         children: [
@@ -118,12 +143,12 @@ class _TransactionFormState extends State<TransactionForm> {
                                           Colors.black26,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: Icon(
+                                    padding: const EdgeInsets.all(8),
+                                    child: const Icon(
                                       Icons.wallet,
                                       color: Colors.white,
                                       size: 22,
                                     ),
-                                    padding: const EdgeInsets.all(8),
                                   )
                                 : ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
@@ -135,14 +160,14 @@ class _TransactionFormState extends State<TransactionForm> {
                                     ),
                                   ),
                           ),
-                          SizedBox(width: 8),
-                          Container(
+                          const SizedBox(width: 8),
+                          SizedBox(
                             width: 130,
                             child: Text(
                               _selectedWalletName ?? 'Selecione',
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                               ),
                             ),
@@ -153,7 +178,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ],
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +187,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Valor:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     TextField(
                       controller: _valueController,
                       keyboardType: TextInputType.number,
@@ -180,7 +205,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -192,7 +217,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Data da Compra:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     TextField(
                       readOnly: true,
                       decoration: InputDecoration(
@@ -207,7 +232,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ],
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,10 +241,23 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Categoria:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     GestureDetector(
                       onTap: () {
-                        _showCategoryDialog(context);
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Categories(
+                              onCategorySelected: (color, icon, name) {
+                                setState(() {
+                                  _selectedCategoryColor = color;
+                                  _selectedCategoryIcon = icon;
+                                  _selectedCategoryName = name;
+                                });
+                              },
+                            );
+                          },
+                        );
                       },
                       child: Row(
                         children: [
@@ -237,14 +275,14 @@ class _TransactionFormState extends State<TransactionForm> {
                               size: 22,
                             ),
                           ),
-                          SizedBox(width: 8),
-                          Container(
+                          const SizedBox(width: 8),
+                          SizedBox(
                             width: 130,
                             child: Text(
                               _selectedCategoryName ?? 'Selecione uma opção',
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                               ),
                             ),
@@ -257,7 +295,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -268,10 +306,10 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Parcelamento:',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     DropdownButtonFormField<String>(
                       value: _selectedInstallments,
-                      hint: Text('Não'),
+                      hint: const Text('Não'),
                       onChanged: (value) {
                         setState(() {
                           _selectedInstallments = value;
@@ -287,7 +325,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   ],
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,10 +334,10 @@ class _TransactionFormState extends State<TransactionForm> {
                       'Recorrente?',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     DropdownButtonFormField<String>(
                       value: _selectedRecurrence,
-                      hint: Text('Não'),
+                      hint: const Text('Não'),
                       onChanged: (value) {
                         setState(() {
                           _selectedRecurrence = value;
@@ -317,27 +355,29 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             'Observação:',
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           TextField(
             controller: _observationController,
             maxLines: 2,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             style: OutlinedButton.styleFrom(
-              side: BorderSide(color: const Color.fromARGB(255, 143, 197, 6)),
-              minimumSize: Size(double.infinity, 60),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              side: const BorderSide(color: Color.fromARGB(255, 143, 197, 6)),
+              minimumSize: const Size(double.infinity, 60),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               backgroundColor: const Color.fromARGB(255, 152, 209, 6),
               elevation: 0,
             ),
-            onPressed: () {},
-            child: Row(
+            onPressed: () {
+              _addTransaction();
+            },
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -347,7 +387,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );

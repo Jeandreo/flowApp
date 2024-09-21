@@ -15,6 +15,7 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   List<dynamic> _categories = [];
 
+  @override
   void initState() {
     super.initState();
     _loadCategories();
@@ -32,7 +33,8 @@ class _CategoriesState extends State<Categories> {
   }
 
   Future<List<CategoryModel>> _fetchCategories() async {
-    final response = await http.get(Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
+    final response = await http.get(
+        Uri.parse('https://flow.dreamake.com.br/api/financeiro/categorias'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       return jsonResponse
@@ -52,13 +54,14 @@ class _CategoriesState extends State<Categories> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IndicatorClose(),
+        const IndicatorClose(),
+        const SizedBox(height: 20),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           width: double.maxFinite,
           height: 470,
           child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 childAspectRatio: 1,
                 crossAxisSpacing: 16.0,
@@ -73,7 +76,9 @@ class _CategoriesState extends State<Categories> {
                       String selectedColor = category.color;
                       String selectedIcon = category.icon;
                       widget.onCategorySelected(
-                        Color(int.parse(selectedColor.substring(1, 7), radix: 16) + 0xFF000000),
+                        Color(int.parse(selectedColor.substring(1, 7),
+                                radix: 16) +
+                            0xFF000000),
                         selectedIcon,
                         category.name,
                       );
@@ -97,15 +102,15 @@ class _CategoriesState extends State<Categories> {
                           size: 25, // Tamanho do ícone
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Container(
-                        constraints: BoxConstraints(maxWidth: 60),
+                        constraints: const BoxConstraints(maxWidth: 60),
                         child: Text(
                           category.name,
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ),
                     ],
