@@ -59,7 +59,7 @@ class _TransactionFormState extends State<TransactionForm> {
       },
     };
 
-    final url = Uri.parse('https://sua-api.com/transacoes'); // Substitua pela URL da sua API
+    final url = Uri.parse('https://flow.dreamake.com.br/api/transacoes/nova-transacao');
 
     try {
       final response = await http.post(
