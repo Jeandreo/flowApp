@@ -5,7 +5,8 @@ import 'package:dream_flow/models/wallet_model.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
 
 class WalletsCredits extends StatefulWidget {
-  final Function(int id, String name, String url, String type) onAccountSelected;
+  final Function(int id, String name, String url, String type)
+      onAccountSelected;
   const WalletsCredits({super.key, required this.onAccountSelected});
   @override
   State<WalletsCredits> createState() => _WalletsCreditsState();
@@ -41,6 +42,7 @@ class _WalletsCreditsState extends State<WalletsCredits> {
         'https://flow.dreamake.com.br/api/financeiro/carteiras-e-cartoes'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
+      print(jsonResponse);
       return jsonResponse
           .map((data) => WalletCreditModel(
                 id: data['id'],
@@ -67,8 +69,8 @@ class _WalletsCreditsState extends State<WalletsCredits> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
-                crossAxisSpacing: 20.0,
-                mainAxisSpacing: 20.0,
+                crossAxisSpacing: 0.0,
+                mainAxisSpacing: 0.0,
               ),
               itemCount: _walletsCredits.length,
               itemBuilder: (BuildContext context, int index) {
@@ -103,15 +105,22 @@ class _WalletsCreditsState extends State<WalletsCredits> {
                         ),
                       ),
                       Container(
+                        width: 150,
                         constraints: const BoxConstraints(maxWidth: 60),
                         child: Text(
                           walletsCredit.name,
                           textAlign: TextAlign.center,
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                       ),
+                      Text(
+                        walletsCredit.type == 'wallet'
+                            ? 'Carteira'
+                            : 'Cartão de Crédito',
+                            style: const TextStyle(fontSize: 12),
+                      )
                     ],
                   ),
                 );

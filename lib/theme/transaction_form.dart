@@ -41,19 +41,19 @@ class _TransactionFormState extends State<TransactionForm> {
   // Função que envia a transação para a API
   Future<void> _addTransaction() async {
     final transactionData = {
-      'description': _descriptionController.text,
+      'name': _descriptionController.text,
       'value': _valueController.text,
-      'observation': _observationController.text,
+      'description': _observationController.text,
       'installments': _selectedInstallments,
-      'recurrence': _selectedRecurrence,
-      'date': _selectedDate != null
+      'recurrent': _selectedRecurrence,
+      'date_purchase': _selectedDate != null
           ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
           : null,
-      'category': _selectedCategoryId,
-      'payment': {
-        'id': _selectedWalletId,
-        'type': _selectedWalletType,
-      },
+      'category_id': _selectedCategoryId,
+      'method': _selectedWalletType,
+      'method_id': _selectedWalletId,
+      'type': 'revenue',
+      'created_by': 1,
     };
 
     final url = Uri.parse('https://flow.dreamake.com.br/api/financeiro/nova-transacao');

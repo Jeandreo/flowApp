@@ -54,6 +54,9 @@ Future<Map<String, dynamic>> requestApi(String url) async {
   );
 
   if (response.statusCode == 200) {
+
+    print(response.body);
+
     // Decodifica o JSON da resposta
     return json.decode(response.body);
   } else {
