@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:dream_flow/services/api_service.dart'; // Supondo que você tenha um serviço API configurado
-import 'package:dream_flow/utils/utils.dart'; // Supondo que o formatCurrency esteja aqui
-import 'package:intl/intl.dart'; // Para formatar a data
+import 'package:dream_flow/services/api_service.dart';
+import 'package:dream_flow/utils/utils.dart';
+import 'package:intl/intl.dart';
 
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key});

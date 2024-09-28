@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:dream_flow/screens/financial/widgets/categories.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
+import 'package:http/http.dart' as http;
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
@@ -22,14 +23,15 @@ class _TransactionFormState extends State<TransactionForm> {
   String? _selectedRecurrence;
   DateTime? _selectedDate;
 
+  int? _selectedCategoryId;
   Color? _selectedCategoryColor;
   String? _selectedCategoryIcon;
   String? _selectedCategoryName;
 
+  int? _selectedWalletId;
   String? _selectedWalletUrl;
   String? _selectedWalletName;
-  
-  get http => null;
+  String? _selectedWalletType;
 
   @override
   void initState() {
@@ -38,7 +40,6 @@ class _TransactionFormState extends State<TransactionForm> {
 
   // Função que envia a transação para a API
   Future<void> _addTransaction() async {
-    // Montar os dados que serão enviados
     final transactionData = {
       'description': _descriptionController.text,
       'value': _valueController.text,
@@ -48,18 +49,14 @@ class _TransactionFormState extends State<TransactionForm> {
       'date': _selectedDate != null
           ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
           : null,
-      'category': {
-        'name': _selectedCategoryName,
-        'color': _selectedCategoryColor?.value.toString(),
-        'icon': _selectedCategoryIcon,
-      },
-      'wallet': {
-        'name': _selectedWalletName,
-        'url': _selectedWalletUrl,
+      'category': _selectedCategoryId,
+      'payment': {
+        'id': _selectedWalletId,
+        'type': _selectedWalletType,
       },
     };
 
-    final url = Uri.parse('https://flow.dreamake.com.br/api/transacoes/nova-transacao');
+    final url = Uri.parse('https://flow.dreamake.com.br/api/financeiro/nova-transacao');
 
     try {
       final response = await http.post(
@@ -77,8 +74,24 @@ class _TransactionFormState extends State<TransactionForm> {
         // Erro na requisição
         print('Erro ao adicionar transação: ${response.body}');
       }
+
     } catch (error) {
       print('Erro ao enviar requisição: $error');
+    }
+  }
+
+  // Função para selecionar a data
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
     }
   }
 
@@ -121,12 +134,12 @@ class _TransactionFormState extends State<TransactionForm> {
                           context: context,
                           builder: (BuildContext context) {
                             return WalletsCredits(
-                              onAccountSelected: (name, url) {
+                              onAccountSelected: (id, name, url, type) {
                                 setState(() {
+                                  _selectedWalletId = id;
                                   _selectedWalletName = name;
                                   _selectedWalletUrl = url;
-                                  print(name);
-                                  print(url);
+                                  _selectedWalletType = type;
                                 });
                               },
                             );
@@ -222,11 +235,11 @@ class _TransactionFormState extends State<TransactionForm> {
                       readOnly: true,
                       decoration: InputDecoration(
                         hintText: _selectedDate == null
-                            ? 'Selecione uma data'
-                            : 'Data: ${DateFormat('dd/MM/yyyy').format(_selectedDate!)}',
+                            ? '00/00/0000'
+                            : DateFormat('dd/MM/yyyy').format(_selectedDate!),
                       ),
                       onTap: () {
-                        // _selectDate(context);
+                        _selectDate(context);
                       },
                     ),
                   ],
@@ -248,8 +261,9 @@ class _TransactionFormState extends State<TransactionForm> {
                           context: context,
                           builder: (BuildContext context) {
                             return Categories(
-                              onCategorySelected: (color, icon, name) {
+                              onCategorySelected: (id, color, icon, name) {
                                 setState(() {
+                                  _selectedCategoryId = id;
                                   _selectedCategoryColor = color;
                                   _selectedCategoryIcon = icon;
                                   _selectedCategoryName = name;

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Categories extends StatefulWidget {
-  final Function(Color color, String icon, String name) onCategorySelected;
+  final Function(int id, Color color, String icon, String name) onCategorySelected;
   const Categories({super.key, required this.onCategorySelected});
   @override
   State<Categories> createState() => _CategoriesState();
@@ -73,9 +73,11 @@ class _CategoriesState extends State<Categories> {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
+                      int selectedId = category.id;
                       String selectedColor = category.color;
                       String selectedIcon = category.icon;
                       widget.onCategorySelected(
+                        selectedId,
                         Color(int.parse(selectedColor.substring(1, 7),
                                 radix: 16) +
                             0xFF000000),

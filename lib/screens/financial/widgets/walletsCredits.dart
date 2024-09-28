@@ -5,7 +5,7 @@ import 'package:dream_flow/models/wallet_model.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
 
 class WalletsCredits extends StatefulWidget {
-  final Function(String name, String url) onAccountSelected;
+  final Function(int id, String name, String url, String type) onAccountSelected;
   const WalletsCredits({super.key, required this.onAccountSelected});
   @override
   State<WalletsCredits> createState() => _WalletsCreditsState();
@@ -45,6 +45,7 @@ class _WalletsCreditsState extends State<WalletsCredits> {
           .map((data) => WalletCreditModel(
                 id: data['id'],
                 name: data['name'],
+                type: data['type'],
                 url: _getImageUrl(data['institution_id']),
               ))
           .toList();
@@ -76,14 +77,18 @@ class _WalletsCreditsState extends State<WalletsCredits> {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
+                      int selectedId = walletsCredit.id;
                       String selectedName = walletsCredit.name;
                       String selectedUrl = walletsCredit.url;
+                      String selectedType = walletsCredit.type;
                       widget.onAccountSelected(
+                        selectedId,
                         selectedName,
                         selectedUrl,
+                        selectedType,
                       );
                     });
-                    Navigator.of(context).pop(); // Fecha o dialog
+                    Navigator.of(context).pop();
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
