@@ -3,6 +3,7 @@ import 'package:dream_flow/services/api_service.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:intl/intl.dart';
 
+
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key});
   @override
@@ -15,7 +16,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   @override
   void initState() {
     super.initState();
-    _transactionsFuture = requestApi('https://flow.dreamake.com.br/api/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
+    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
   }
 
   @override

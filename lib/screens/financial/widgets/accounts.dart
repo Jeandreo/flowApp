@@ -1,3 +1,4 @@
+import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -20,7 +21,7 @@ class _AccountsSectionState extends State<AccountsSection> {
 
   Future<List<Map<String, dynamic>>> fetchAccounts() async {
     final response = await http.get(Uri.parse(
-        'https://flow.dreamake.com.br/api/financeiro/carteiras-e-cartoes'));
+        '${apiRoute()}/financeiro/carteiras-e-cartoes'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

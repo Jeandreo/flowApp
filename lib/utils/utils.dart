@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // P
+import 'package:intl/intl.dart';
+
+String apiRoute() {
+  // const baseUrl = 'https://flow.dreamake.com.br/api';
+  const baseUrl = 'https://9b66-189-4-3-149.ngrok-free.app/api';
+  return baseUrl;
+}
 
 // Função utilitária para formatar valores monetários
 String formatCurrency(num amount) {

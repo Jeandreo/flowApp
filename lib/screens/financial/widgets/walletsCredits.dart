@@ -39,7 +39,7 @@ class _WalletsCreditsState extends State<WalletsCredits> {
 
   Future<List<WalletCreditModel>> _fetchWalletsCredits() async {
     final response = await http.get(Uri.parse(
-        'https://flow.dreamake.com.br/api/financeiro/carteiras-e-cartoes'));
+        'apiRoute()/financeiro/carteiras-e-cartoes'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       print(jsonResponse);

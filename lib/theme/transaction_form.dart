@@ -56,7 +56,7 @@ class _TransactionFormState extends State<TransactionForm> {
       'created_by': 1,
     };
 
-    final url = Uri.parse('https://flow.dreamake.com.br/api/financeiro/nova-transacao');
+    final url = Uri.parse('apiRoute()/financeiro/nova-transacao');
 
     try {
       final response = await http.post(

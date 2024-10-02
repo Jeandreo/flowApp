@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> login(String email, String password) async {
   // URL para login no Flow
-  final url = Uri.parse('https://flow.dreamake.com.br/api/autenticacao/login');
+  final url = Uri.parse('apiRoute()/autenticacao/login');
 
   // Tente
   try {
@@ -34,6 +34,7 @@ Future<void> login(String email, String password) async {
 }
 
 Future<Map<String, dynamic>> requestApi(String url) async {
+
   // Obtém o token armazenado
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('authToken');
@@ -53,8 +54,12 @@ Future<Map<String, dynamic>> requestApi(String url) async {
 
   // Decodifica o JSON da resposta
   if (response.statusCode == 200) {
+
+    print(response.body);
+
     return json.decode(response.body);
   } else {
     throw Exception('Falha na requisição');
   }
+
 }
