@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 String apiRoute() {
   // const baseUrl = 'https://flow.dreamake.com.br/api';
-  const baseUrl = 'https://9b66-189-4-3-149.ngrok-free.app/api';
+  const baseUrl = 'https://b843-2804-d55-8324-cb00-393b-cb9a-20d9-b03a.ngrok-free.app/api';
   return baseUrl;
 }
 
@@ -25,8 +25,8 @@ String forceFormatCurrency(String value) {
   value = value.replaceAll(RegExp(r'[^\d]'), '');
   if (value.isEmpty) return '';
   double parsedValue = double.parse(value) / 100;
-  return NumberFormat.currency(locale: 'pt_BR', symbol: '')
-      .format(parsedValue);
+  return 'R\$ ${NumberFormat.currency(locale: 'pt_BR', symbol: '')
+      .format(parsedValue)}';
 }
 
 IconData getIconAwsome(String? iconName) {

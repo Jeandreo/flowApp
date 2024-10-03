@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dream_flow/models/user_model.dart';
+import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +34,7 @@ class _AuthFormState extends State<AuthForm> {
     try {
       // Realiza autenticação
       final response = await http.post(
-        Uri.parse('apiRoute()/financeiro/transacoes/autenticacao/login'),
+        Uri.parse('${apiRoute()}/financeiro/transacoes/autenticacao/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password}),
       );

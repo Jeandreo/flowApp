@@ -1,8 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:dream_flow/models/wallet_model.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
+import 'package:dream_flow/utils/utils.dart';
 
 class WalletsCredits extends StatefulWidget {
   final Function(int id, String name, String url, String type)
@@ -39,7 +40,7 @@ class _WalletsCreditsState extends State<WalletsCredits> {
 
   Future<List<WalletCreditModel>> _fetchWalletsCredits() async {
     final response = await http.get(Uri.parse(
-        'apiRoute()/financeiro/carteiras-e-cartoes'));
+        '${apiRoute()}/financeiro/carteiras-e-cartoes'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       print(jsonResponse);

@@ -10,7 +10,7 @@ class IndicatorClose extends StatelessWidget {
         width: 40,
         margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.grey[400],
+          color: const Color.fromARGB(20, 0, 0, 0),
           borderRadius: BorderRadius.circular(10),
         ),
       );

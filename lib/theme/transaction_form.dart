@@ -16,7 +16,7 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final _descriptionController = TextEditingController();
-  final _valueController = TextEditingController();
+  final _valueController = TextEditingController(text: 'R\$ 0,00');
   final _observationController = TextEditingController();
 
   String? _selectedInstallments;
@@ -56,7 +56,7 @@ class _TransactionFormState extends State<TransactionForm> {
       'created_by': 1,
     };
 
-    final url = Uri.parse('apiRoute()/financeiro/nova-transacao');
+    final url = Uri.parse('${apiRoute()}/financeiro/nova-transacao');
 
     try {
       final response = await http.post(
@@ -74,7 +74,6 @@ class _TransactionFormState extends State<TransactionForm> {
         // Erro na requisição
         print('Erro ao adicionar transação: ${response.body}');
       }
-
     } catch (error) {
       print('Erro ao enviar requisição: $error');
     }
@@ -95,315 +94,391 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
+  bool isRedBackground = false;
+  bool isIconFlipped = false;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Align(
-            alignment: Alignment.center,
-            child: IndicatorClose(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: isRedBackground == true
+                ? Colors.red
+                : Color.fromARGB(255, 76, 162, 10),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
           ),
-          Text(
-            'Descrição:',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          const SizedBox(height: 5),
-          TextField(
-            controller: _descriptionController,
-          ),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+              vertical: 16, horizontal: 8), // Padding interno
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              IconButton(
+                icon: Transform.rotate(
+                  angle: isIconFlipped ? 3.1416 : 0,
+                  child: const Icon(Icons.arrow_upward,
+                      color: Colors.white, size: 30),
+                ),
+                onPressed: () {
+                  setState(() {
+                    if (isRedBackground == false) {
+                      isRedBackground = true;
+                      isIconFlipped = true;
+                    } else {
+                      isRedBackground = false;
+                      isIconFlipped = false;
+                    }
+                  });
+                },
+              ),
+              // Campo de entrada numérico para R$
+              // Campo de entrada numérico para R$
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Pago com:',
-                      style: Theme.of(context).textTheme.titleSmall,
+                child: TextField(
+                  
+                  controller: _valueController,
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.right, // Alinhado à direita
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'R\$ 0,00',
+                    hintStyle: TextStyle(
+                      color: Colors.white.withOpacity(0.6),
                     ),
-                    const SizedBox(height: 15),
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return WalletsCredits(
-                              onAccountSelected: (id, name, url, type) {
-                                setState(() {
-                                  _selectedWalletId = id;
-                                  _selectedWalletName = name;
-                                  _selectedWalletUrl = url;
-                                  _selectedWalletType = type;
-                                });
+                    filled: false, // Torna o fundo transparente
+                  ),
+                  onChanged: (value) {
+                    String formattedValue = forceFormatCurrency(value);
+                    _valueController.value = TextEditingValue(
+                      text: formattedValue,
+                      selection: TextSelection.collapsed(
+                          offset: formattedValue.length),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                'Descrição:',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 5),
+              TextField(
+                controller: _descriptionController,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Pago com:',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 15),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return WalletsCredits(
+                                  onAccountSelected: (id, name, url, type) {
+                                    setState(() {
+                                      _selectedWalletId = id;
+                                      _selectedWalletName = name;
+                                      _selectedWalletUrl = url;
+                                      _selectedWalletType = type;
+                                    });
+                                  },
+                                );
                               },
                             );
                           },
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Container(
-                            child: _selectedWalletUrl == null
-                                ? Container(
-                                    decoration: BoxDecoration(
-                                      color: _selectedCategoryColor ??
-                                          Colors.black26,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    padding: const EdgeInsets.all(8),
-                                    child: const Icon(
-                                      Icons.wallet,
-                                      color: Colors.white,
-                                      size: 22,
-                                    ),
-                                  )
-                                : ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      _selectedWalletUrl!,
-                                      width: 40,
-                                      height: 40,
-                                      fit: BoxFit.cover,
-                                    ),
+                          child: Row(
+                            children: [
+                              Container(
+                                child: _selectedWalletUrl == null
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                          color: _selectedCategoryColor ??
+                                              Colors.black26,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        child: const Icon(
+                                          Icons.wallet,
+                                          color: Colors.white,
+                                          size: 22,
+                                        ),
+                                      )
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          _selectedWalletUrl!,
+                                          width: 40,
+                                          height: 40,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                              ),
+                              const SizedBox(width: 8),
+                              SizedBox(
+                                width: 130,
+                                child: Text(
+                                  _selectedWalletName ?? 'Selecione',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 14,
                                   ),
-                          ),
-                          const SizedBox(width: 8),
-                          SizedBox(
-                            width: 130,
-                            child: Text(
-                              _selectedWalletName ?? 'Selecione',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                fontSize: 14,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Valor:',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 5),
+                        TextField(
+                          controller: _valueController,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            String formattedValue = forceFormatCurrency(value);
+                            _valueController.value = TextEditingValue(
+                              text: formattedValue,
+                              selection: TextSelection.collapsed(
+                                  offset: formattedValue.length),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Valor:',
-                      style: Theme.of(context).textTheme.titleSmall,
+              const SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Data da Compra:',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 5),
+                        TextField(
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            hintText: _selectedDate == null
+                                ? '00/00/0000'
+                                : DateFormat('dd/MM/yyyy')
+                                    .format(_selectedDate!),
+                          ),
+                          onTap: () {
+                            _selectDate(context);
+                          },
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 5),
-                    TextField(
-                      controller: _valueController,
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        String formattedValue = forceFormatCurrency(value);
-                        _valueController.value = TextEditingValue(
-                          text: formattedValue,
-                          selection: TextSelection.collapsed(
-                              offset: formattedValue.length),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Data da Compra:',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 5),
-                    TextField(
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        hintText: _selectedDate == null
-                            ? '00/00/0000'
-                            : DateFormat('dd/MM/yyyy').format(_selectedDate!),
-                      ),
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Categoria:',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 15),
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Categories(
-                              onCategorySelected: (id, color, icon, name) {
-                                setState(() {
-                                  _selectedCategoryId = id;
-                                  _selectedCategoryColor = color;
-                                  _selectedCategoryIcon = icon;
-                                  _selectedCategoryName = name;
-                                });
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Categoria:',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 15),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Categories(
+                                  onCategorySelected: (id, color, icon, name) {
+                                    setState(() {
+                                      _selectedCategoryId = id;
+                                      _selectedCategoryColor = color;
+                                      _selectedCategoryIcon = icon;
+                                      _selectedCategoryName = name;
+                                    });
+                                  },
+                                );
                               },
                             );
                           },
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: _selectedCategoryColor ?? Colors.black26,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              _selectedCategoryIcon != null
-                                  ? getIconAwsome(_selectedCategoryIcon!)
-                                  : Icons.list,
-                              color: Colors.white,
-                              size: 22,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          SizedBox(
-                            width: 130,
-                            child: Text(
-                              _selectedCategoryName ?? 'Selecione uma opção',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: const TextStyle(
-                                fontSize: 14,
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color:
+                                      _selectedCategoryColor ?? Colors.black26,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  _selectedCategoryIcon != null
+                                      ? getIconAwsome(_selectedCategoryIcon!)
+                                      : Icons.list,
+                                  color: Colors.white,
+                                  size: 22,
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 8),
+                              SizedBox(
+                                width: 130,
+                                child: Text(
+                                  _selectedCategoryName ??
+                                      'Selecione uma opção',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Parcelamento:',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 5),
+                        DropdownButtonFormField<String>(
+                          value: _selectedInstallments,
+                          hint: const Text('Não'),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedInstallments = value;
+                            });
+                          },
+                          items: ['Não', 'Sim'].map((installment) {
+                            return DropdownMenuItem(
+                              value: installment,
+                              child: Text(installment),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Recorrente?',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 5),
+                        DropdownButtonFormField<String>(
+                          value: _selectedRecurrence,
+                          hint: const Text('Não'),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedRecurrence = value;
+                            });
+                          },
+                          items: ['Sim', 'Não'].map((recurrence) {
+                            return DropdownMenuItem(
+                              value: recurrence,
+                              child: Text(recurrence),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Observação:',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 5),
+              TextField(
+                controller: _observationController,
+                maxLines: 1,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                style: OutlinedButton.styleFrom(
+                  side:
+                      const BorderSide(color: Color.fromARGB(255, 143, 197, 6)),
+                  minimumSize: const Size(double.infinity, 60),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  backgroundColor: const Color.fromARGB(255, 152, 209, 6),
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  _addTransaction();
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Parcelamento:',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 5),
-                    DropdownButtonFormField<String>(
-                      value: _selectedInstallments,
-                      hint: const Text('Não'),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedInstallments = value;
-                        });
-                      },
-                      items: ['Não', 'Sim'].map((installment) {
-                        return DropdownMenuItem(
-                          value: installment,
-                          child: Text(installment),
-                        );
-                      }).toList(),
+                      'Adicionar Transação',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Recorrente?',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 5),
-                    DropdownButtonFormField<String>(
-                      value: _selectedRecurrence,
-                      hint: const Text('Não'),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedRecurrence = value;
-                        });
-                      },
-                      items: ['Sim', 'Não'].map((recurrence) {
-                        return DropdownMenuItem(
-                          value: recurrence,
-                          child: Text(recurrence),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Observação:',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          const SizedBox(height: 5),
-          TextField(
-            controller: _observationController,
-            maxLines: 2,
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Color.fromARGB(255, 143, 197, 6)),
-              minimumSize: const Size(double.infinity, 60),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              backgroundColor: const Color.fromARGB(255, 152, 209, 6),
-              elevation: 0,
-            ),
-            onPressed: () {
-              _addTransaction();
-            },
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Adicionar Transação',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

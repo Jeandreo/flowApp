@@ -34,7 +34,7 @@ class _CategoriesState extends State<Categories> {
 
   Future<List<CategoryModel>> _fetchCategories() async {
     final response = await http.get(
-        Uri.parse('apiRoute()/financeiro/categorias'));
+        Uri.parse('${apiRoute()}/financeiro/categorias'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       return jsonResponse
