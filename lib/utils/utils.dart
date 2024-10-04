@@ -20,7 +20,6 @@ String capitalize(String text) {
   return text[0].toUpperCase() + text.substring(1);
 }
 
-
 String forceFormatCurrency(String value) {
   value = value.replaceAll(RegExp(r'[^\d]'), '');
   if (value.isEmpty) return '';

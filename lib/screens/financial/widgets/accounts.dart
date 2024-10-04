@@ -20,8 +20,7 @@ class _AccountsSectionState extends State<AccountsSection> {
   }
 
   Future<List<Map<String, dynamic>>> fetchAccounts() async {
-    final response = await http.get(Uri.parse(
-        '${apiRoute()}/financeiro/carteiras-e-cartoes'));
+    final response = await http.get(Uri.parse('${apiRoute()}/financeiro/carteiras-e-cartoes'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -107,17 +106,17 @@ class _AccountsSectionState extends State<AccountsSection> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment:
-                  MainAxisAlignment.center, // Centraliza verticalmente
+                  MainAxisAlignment.center,
               children: [
                 Text(
                   accountName,
                   style: Theme.of(context).textTheme.titleSmall,
-                  maxLines: 1, // Limita a 1 linha
+                  maxLines: 1,
                   overflow: TextOverflow
-                      .ellipsis, // Adiciona "..." se o texto for maior que o espaço disponível
+                      .ellipsis,
                 ),
                 Text(
-                  '******', // Placeholder para o saldo
+                  '000',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
