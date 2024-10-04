@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BalanceSection extends StatelessWidget {
-  final String balance;
   final bool isVisible;
   final VoidCallback onToggleVisibility;
 
   const BalanceSection({
     super.key,
-    required this.balance,
     required this.isVisible,
     required this.onToggleVisibility,
   });
@@ -47,7 +45,7 @@ class BalanceSection extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             subtitle: Text(
-              isVisible ? balance : '******', // Mostra ou esconde o saldo
+              isVisible ? '123' : '******', // Mostra ou esconde o saldo
               style: Theme.of(context).textTheme.bodySmall,
             ),
             trailing: IconButton(

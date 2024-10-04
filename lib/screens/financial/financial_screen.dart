@@ -31,9 +31,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
 
   // Alterna a visibilidade do saldo
   void _toggleBalanceVisibility() {
-    setState(() {
-      _isBalanceVisible = !_isBalanceVisible;
-    });
+    setState(() { _isBalanceVisible = !_isBalanceVisible; });
     PreferencesUtil.saveBalanceVisibility(_isBalanceVisible);
   }
 
@@ -59,7 +57,6 @@ class _FinancialScreenState extends State<FinancialScreen> {
               children: [
                 const HeaderUserSection(),
                 BalanceSection(
-                  balance: "R\$ 0,00",
                   isVisible: _isBalanceVisible,
                   onToggleVisibility: _toggleBalanceVisibility,
                 ),

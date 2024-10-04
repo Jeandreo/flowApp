@@ -59,14 +59,14 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   Widget _buildTransactionItem(
     String name,
     String value,
-    String datePayment, // Recebe a data de pagamento
+    String datePayment,
     String? fatherColor,
     String? iconName,
     int fature,
     bool isVisible,
   ) {
 
-    // Define a variável money
+    // Define as variáveis dos valores
     String money;
     Color color;
 
