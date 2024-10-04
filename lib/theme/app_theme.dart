@@ -49,8 +49,8 @@ ThemeData buildThemeData(context) {
     // ),
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
-      fillColor: Color.fromARGB(255, 236, 236, 236),
-      contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+      fillColor: Color.fromARGB(255, 240, 240, 240),
+      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 16.0),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         borderSide: BorderSide.none,
@@ -58,6 +58,15 @@ ThemeData buildThemeData(context) {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide.none,
+      ),
+      labelStyle: TextStyle(
+        fontWeight: FontWeight.w400,
+      ),
+      helperStyle: TextStyle(
+        fontWeight: FontWeight.w400,
+      ),
+      hintStyle: TextStyle(
+        fontWeight: FontWeight.w400,
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(

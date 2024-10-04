@@ -6,10 +6,10 @@ import 'package:dream_flow/utils/utils.dart';
 import 'package:dream_flow/screens/financial/widgets/categories.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 
 class TransactionForm extends StatefulWidget {
-  const TransactionForm({Key? key}) : super(key: key);
+  final String? transactionType;
+  const TransactionForm({Key? key, this.transactionType}) : super(key: key);
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -97,15 +97,24 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    Color backgroundColor;
+    if (widget.transactionType == 'expense') {
+      backgroundColor = Colors.red;
+    } else if (widget.transactionType == 'transfer') {
+      backgroundColor = Colors.black;
+    } else {
+      backgroundColor = const Color(0xff017a48);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          decoration: const BoxDecoration(
-            color: Color(0xff017a48),
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
@@ -192,7 +201,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           'Pago com:',
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 7),
                         GestureDetector(
                           onTap: () {
                             showModalBottomSheet(
@@ -295,7 +304,7 @@ class _TransactionFormState extends State<TransactionForm> {
                           'Categoria:',
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 12),
                         GestureDetector(
                           onTap: () {
                             showModalBottomSheet(
@@ -372,6 +381,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               _selectedInstallments = value;
                             });
                           },
+                          style: Theme.of(context).textTheme.titleSmall,
                           items: ['Não', 'Sim'].map((installment) {
                             return DropdownMenuItem(
                               value: installment,
@@ -395,6 +405,7 @@ class _TransactionFormState extends State<TransactionForm> {
                         DropdownButtonFormField<String>(
                           value: _selectedRecurrence,
                           hint: const Text('Não'),
+                          style: Theme.of(context).textTheme.titleSmall,
                           onChanged: (value) {
                             setState(() {
                               _selectedRecurrence = value;
@@ -440,7 +451,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Adicionar Transação',
+                      'adicionar transação',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
