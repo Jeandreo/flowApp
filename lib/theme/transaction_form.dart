@@ -97,13 +97,21 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor;
+
+    // Define a cor do fundo
+    Color bgValue;
+    String textSend;
+
+    // Realiza as verificações
     if (widget.transactionType == 'expense') {
-      backgroundColor = Colors.red;
+      bgValue = Colors.red;
+      textSend = 'adicionar despesa';
     } else if (widget.transactionType == 'transfer') {
-      backgroundColor = Colors.black;
+      bgValue = Colors.black;
+      textSend = 'realizar transferencia';
     } else {
-      backgroundColor = const Color(0xff017a48);
+      bgValue = const Color(0xff017a48);
+      textSend = 'adicionar receita';
     }
 
     return Column(
@@ -113,7 +121,7 @@ class _TransactionFormState extends State<TransactionForm> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: backgroundColor,
+            color: bgValue,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -447,12 +455,12 @@ class _TransactionFormState extends State<TransactionForm> {
                 onPressed: () {
                   _addTransaction();
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'adicionar transação',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      textSend,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ],
                 ),
