@@ -6,8 +6,16 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Categories extends StatefulWidget {
-  final Function(int id, Color color, String icon, String name) onCategorySelected;
-  const Categories({super.key, required this.onCategorySelected});
+  final Function(int id, Color color, String icon, String name)
+      onCategorySelected;
+  final String? transactionType;
+
+  const Categories({
+    super.key,
+    required this.onCategorySelected,
+    this.transactionType,
+  });
+
   @override
   State<Categories> createState() => _CategoriesState();
 }
@@ -33,8 +41,14 @@ class _CategoriesState extends State<Categories> {
   }
 
   Future<List<CategoryModel>> _fetchCategories() async {
-    final response = await http.get(
-        Uri.parse('${apiRoute()}/financeiro/categorias'));
+
+    // Monta a URL com base no tipo de transação
+    String url = '${apiRoute()}/financeiro/categorias/${widget.transactionType}';
+
+    // Realiza consulta
+    final response = await http.get(Uri.parse(url));
+
+    // Sucesso
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       return jsonResponse

@@ -41,6 +41,7 @@ class _TransactionFormState extends State<TransactionForm> {
 
   // Função que envia a transação para a API
   Future<void> _addTransaction() async {
+    // Realiza as verificações
     final transactionData = {
       'name': _descriptionController.text,
       'value': _valueController.text,
@@ -53,7 +54,7 @@ class _TransactionFormState extends State<TransactionForm> {
       'category_id': _selectedCategoryId,
       'method': _selectedWalletType,
       'method_id': _selectedWalletId,
-      'type': 'revenue',
+      'type': widget.transactionType,
       'created_by': 1,
     };
 
@@ -97,7 +98,6 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-
     // Define a cor do fundo
     Color bgValue;
     String textSend;
@@ -327,6 +327,7 @@ class _TransactionFormState extends State<TransactionForm> {
                                       _selectedCategoryName = name;
                                     });
                                   },
+                                  transactionType: widget.transactionType,
                                 );
                               },
                             );
