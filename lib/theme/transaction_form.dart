@@ -6,6 +6,7 @@ import 'package:dream_flow/utils/utils.dart';
 import 'package:dream_flow/screens/financial/widgets/categories.dart';
 import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
@@ -94,9 +95,6 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  bool isRedBackground = false;
-  bool isIconFlipped = false;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -104,68 +102,62 @@ class _TransactionFormState extends State<TransactionForm> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          decoration: BoxDecoration(
-            color: isRedBackground == true
-                ? Colors.red
-                : Color.fromARGB(255, 76, 162, 10),
-            borderRadius: const BorderRadius.only(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          decoration: const BoxDecoration(
+            color: Color(0xff017a48),
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
           ),
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-              vertical: 16, horizontal: 8), // Padding interno
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: Transform.rotate(
-                  angle: isIconFlipped ? 3.1416 : 0,
-                  child: const Icon(Icons.arrow_upward,
-                      color: Colors.white, size: 30),
-                ),
-                onPressed: () {
-                  setState(() {
-                    if (isRedBackground == false) {
-                      isRedBackground = true;
-                      isIconFlipped = true;
-                    } else {
-                      isRedBackground = false;
-                      isIconFlipped = false;
-                    }
-                  });
-                },
+              const Icon(
+                Icons.calculate_rounded,
+                color: Colors.white,
+                size: 40,
               ),
-              // Campo de entrada numérico para R$
-              // Campo de entrada numérico para R$
               Expanded(
-                child: TextField(
-                  
-                  controller: _valueController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.right, // Alinhado à direita
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'R\$ 0,00',
-                    hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text(
+                      'valor',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
-                    filled: false, // Torna o fundo transparente
-                  ),
-                  onChanged: (value) {
-                    String formattedValue = forceFormatCurrency(value);
-                    _valueController.value = TextEditingValue(
-                      text: formattedValue,
-                      selection: TextSelection.collapsed(
-                          offset: formattedValue.length),
-                    );
-                  },
+                    TextField(
+                      controller: _valueController,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'R\$ 0,00',
+                        hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.6),
+                        ),
+                        filled: false,
+                        contentPadding: const EdgeInsets.all(0),
+                      ),
+                      onChanged: (value) {
+                        String formattedValue = forceFormatCurrency(value);
+                        _valueController.value = TextEditingValue(
+                          text: formattedValue,
+                          selection: TextSelection.collapsed(
+                              offset: formattedValue.length),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -175,18 +167,23 @@ class _TransactionFormState extends State<TransactionForm> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text(
-                'Descrição:',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: 5),
-              TextField(
-                controller: _descriptionController,
-              ),
-              const SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Descrição:',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      TextField(
+                        controller: _descriptionController,
+                      ),
+                    ],
+                  )),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,31 +252,6 @@ class _TransactionFormState extends State<TransactionForm> {
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Valor:',
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                        const SizedBox(height: 5),
-                        TextField(
-                          controller: _valueController,
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            String formattedValue = forceFormatCurrency(value);
-                            _valueController.value = TextEditingValue(
-                              text: formattedValue,
-                              selection: TextSelection.collapsed(
-                                  offset: formattedValue.length),
-                            );
-                          },
                         ),
                       ],
                     ),
@@ -454,11 +426,11 @@ class _TransactionFormState extends State<TransactionForm> {
               ElevatedButton(
                 style: OutlinedButton.styleFrom(
                   side:
-                      const BorderSide(color: Color.fromARGB(255, 143, 197, 6)),
+                      const BorderSide(color: Color.fromARGB(255, 6, 137, 197)),
                   minimumSize: const Size(double.infinity, 60),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  backgroundColor: const Color.fromARGB(255, 152, 209, 6),
+                  backgroundColor: const Color.fromARGB(255, 6, 148, 209),
                   elevation: 0,
                 ),
                 onPressed: () {
