@@ -4,13 +4,11 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AccountsSection extends StatefulWidget {
-  final bool isBalanceVisible; // Adicione esta propriedade
-  final Function() onToggleBalanceVisibility; // Função para alternar a visibilidade
+  final bool isBalanceVisible;
 
   const AccountsSection({
     super.key,
     required this.isBalanceVisible,
-    required this.onToggleBalanceVisibility,
   });
 
   @override
@@ -121,7 +119,7 @@ class _AccountsSectionState extends State<AccountsSection> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  widget.isBalanceVisible ? '000' : '******', // Mostra ou esconde o saldo
+                  widget.isBalanceVisible ? '000' : '******',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],

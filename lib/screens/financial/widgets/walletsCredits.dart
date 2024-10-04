@@ -6,8 +6,7 @@ import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:dream_flow/utils/utils.dart';
 
 class WalletsCredits extends StatefulWidget {
-  final Function(int id, String name, String url, String type)
-      onAccountSelected;
+  final Function(int id, String name, String url, String type) onAccountSelected;
   const WalletsCredits({super.key, required this.onAccountSelected});
   @override
   State<WalletsCredits> createState() => _WalletsCreditsState();

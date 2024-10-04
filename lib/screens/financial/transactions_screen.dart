@@ -14,7 +14,7 @@ class TransactionsScreenState extends State<TransactionsScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: TopBar(),
-      body: TransactionsSection(),
+      body: Text('123'),
     );
   }
 }

@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Categories extends StatefulWidget {
-  final Function(int id, Color color, String icon, String name)
-      onCategorySelected;
+  final Function(int id, Color color, String icon, String name) onCategorySelected;
   final String? transactionType;
 
   const Categories({

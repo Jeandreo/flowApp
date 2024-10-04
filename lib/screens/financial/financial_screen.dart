@@ -66,7 +66,6 @@ class _FinancialScreenState extends State<FinancialScreen> {
                 const SizedBox(height: 5),
                 AccountsSection(
                   isBalanceVisible: _isBalanceVisible,
-                  onToggleBalanceVisibility: _toggleBalanceVisibility,
                 ),
                 Expanded(
                   child: Container(
@@ -84,7 +83,9 @@ class _FinancialScreenState extends State<FinancialScreen> {
                         ),
                       ],
                     ),
-                    child: const TransactionsSection(),
+                    child: TransactionsSection(
+                      isVisible: _isBalanceVisible,
+                    ),
                   ),
                 ),
               ],

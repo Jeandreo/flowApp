@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 
 
 class TransactionsSection extends StatefulWidget {
-  const TransactionsSection({super.key});
+  const TransactionsSection({super.key, required this.isVisible});
+  final bool isVisible;
   @override
   State<TransactionsSection> createState() => _TransactionsSectionState();
 }
@@ -47,6 +48,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                 transaction['color'],
                 transaction['icon'],
                 transaction['fature'],
+                widget.isVisible,
               );
             },
           );
@@ -61,8 +63,21 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     String? fatherColor,
     String? iconName,
     int fature,
+    bool isVisible,
   ) {
-    final formattedAmount = formatCurrency(double.tryParse(value) ?? 0.0);
+
+    // Define a variável money
+    String money;
+    Color color;
+
+    // Se for permitido ver, formata.
+    if(isVisible){
+      money = formatCurrency(double.tryParse(value) ?? 0.0);
+      color = double.parse(value) >= 0 ? Colors.green : Colors.red;
+    } else {
+      money = '*****';
+      color = Colors.black;
+    }
 
     // Formatar a data de pagamento
     final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
@@ -105,11 +120,11 @@ class _TransactionsSectionState extends State<TransactionsSection> {
             ),
           ),
           Text(
-            formattedAmount,
+            money,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.normal,
-              color: double.parse(value) >= 0 ? Colors.green : Colors.red,
+              color: color,
             ),
           ),
         ],

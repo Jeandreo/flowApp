@@ -13,9 +13,6 @@ class TasksScreen extends StatelessWidget {
       appBar: TopBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TransactionsSection(),
-        ],
       ),
     );
   }
