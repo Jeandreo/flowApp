@@ -1,4 +1,3 @@
-import 'package:dream_flow/screens/financial/widgets/accounts.dart';
 import 'package:dream_flow/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +6,9 @@ class ListsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return const Scaffold(
       appBar: TopBar(),
-      body: AccountsSection()
+      body: Text('123'),
     );
   }
 }

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BalanceSection extends StatefulWidget {
+class BalanceSection extends StatelessWidget {
   final String balance;
+  final bool isVisible;
+  final VoidCallback onToggleVisibility;
 
-  const BalanceSection({super.key, required this.balance});
-
-  @override
-    State<BalanceSection> createState() => _BalanceSectionState();
-
-}
-
-class _BalanceSectionState extends State<BalanceSection> {
-  bool _isBalanceVisible = false;
+  const BalanceSection({
+    super.key,
+    required this.balance,
+    required this.isVisible,
+    required this.onToggleVisibility,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +34,7 @@ class _BalanceSectionState extends State<BalanceSection> {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: const Color.fromARGB(47, 38, 41, 67),
-                borderRadius: BorderRadius.circular(
-                    8),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(
                 Icons.savings,
@@ -45,28 +43,22 @@ class _BalanceSectionState extends State<BalanceSection> {
               ),
             ),
             title: Text(
-              'saldo atual',
+              'Saldo Atual',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             subtitle: Text(
-              _isBalanceVisible
-                  ? widget.balance
-                  : '******', // Mostra ou esconde o saldo
+              isVisible ? balance : '******', // Mostra ou esconde o saldo
               style: Theme.of(context).textTheme.bodySmall,
             ),
             trailing: IconButton(
               icon: Icon(
-                _isBalanceVisible ? Icons.visibility : Icons.visibility_off,
+                isVisible ? Icons.visibility : Icons.visibility_off,
                 color: Colors.grey,
                 size: 30,
               ),
-              onPressed: () {
-                setState(() {
-                  _isBalanceVisible = !_isBalanceVisible;
-                });
-              },
+              onPressed: onToggleVisibility, // Chamando a função de alternância
             ),
-          )
+          ),
         ],
       ),
     );

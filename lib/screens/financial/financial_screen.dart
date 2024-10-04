@@ -3,9 +3,39 @@ import 'package:dream_flow/screens/financial/widgets/transactions.dart';
 import 'package:dream_flow/screens/financial/widgets/accounts.dart';
 import 'package:dream_flow/screens/financial/widgets/balance.dart';
 import 'package:dream_flow/screens/financial/widgets/header.dart';
+import 'package:dream_flow/utils/preferences.dart';
 
-class FinancialScreen extends StatelessWidget {
+class FinancialScreen extends StatefulWidget {
   const FinancialScreen({super.key});
+
+  @override
+  State<FinancialScreen> createState() => _FinancialScreenState();
+}
+
+class _FinancialScreenState extends State<FinancialScreen> {
+  bool _isBalanceVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBalanceVisibility();
+  }
+
+  // Carrega a visibilidade do saldo
+  Future<void> _loadBalanceVisibility() async {
+    bool isVisible = await PreferencesUtil.getBalanceVisibility();
+    setState(() {
+      _isBalanceVisible = isVisible;
+    });
+  }
+
+  // Alterna a visibilidade do saldo
+  void _toggleBalanceVisibility() {
+    setState(() {
+      _isBalanceVisible = !_isBalanceVisible;
+    });
+    PreferencesUtil.saveBalanceVisibility(_isBalanceVisible);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +57,36 @@ class FinancialScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const Column(
-                  children: [
-                    HeaderUserSection(),
-                    BalanceSection(balance: "R\$ 0,00"),
-                    SizedBox(height: 5),
-                  ],
+                const HeaderUserSection(),
+                BalanceSection(
+                  balance: "R\$ 0,00",
+                  isVisible: _isBalanceVisible,
+                  onToggleVisibility: _toggleBalanceVisibility,
                 ),
-                const AccountsSection(),
+                const SizedBox(height: 5),
+                AccountsSection(
+                  isBalanceVisible: _isBalanceVisible,
+                  onToggleBalanceVisibility: _toggleBalanceVisibility,
+                ),
                 Expanded(
-                    child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromARGB(20, 0, 0, 0),
-                        blurRadius: 25,
-                        offset: Offset(0, 8),
-                      ),
-                    ],
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(20, 0, 0, 0),
+                          blurRadius: 25,
+                          offset: Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: const TransactionsSection(),
                   ),
-                  child: const TransactionsSection(),
-                ))
+                ),
               ],
             )));
   }
