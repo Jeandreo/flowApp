@@ -43,7 +43,6 @@ class _WalletsCreditsState extends State<WalletsCredits> {
         '${apiRoute()}/financeiro/carteiras-e-cartoes'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
-      print(jsonResponse);
       return jsonResponse
           .map((data) => WalletCreditModel(
                 id: data['id'],
