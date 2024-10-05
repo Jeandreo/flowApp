@@ -1,5 +1,4 @@
 // lib/screens/dashboard.dart
-import 'package:dream_flow/screens/financial/widgets/transactions.dart';
 import 'package:dream_flow/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 

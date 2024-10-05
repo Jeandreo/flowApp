@@ -1,6 +1,9 @@
+import 'package:dream_flow/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class BalanceSection extends StatelessWidget {
+class BalanceSection extends StatefulWidget {
   final bool isVisible;
   final VoidCallback onToggleVisibility;
 
@@ -9,6 +12,38 @@ class BalanceSection extends StatelessWidget {
     required this.isVisible,
     required this.onToggleVisibility,
   });
+
+  @override
+  State<BalanceSection> createState() => _BalanceSectionState();
+}
+
+class _BalanceSectionState extends State<BalanceSection> {
+  String? _balance;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBalance(); // Carrega o saldo na inicialização
+  }
+
+  // Função para buscar o saldo via API
+  Future<void> _fetchBalance() async {
+    try {
+      final response = await http.get(Uri.parse('${apiRoute()}/financeiro/balanco'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final double balanceValue = double.parse(data);
+        setState(() {
+          _balance = formatCurrency(balanceValue); // Formata o saldo
+        });
+      } else {
+        throw Exception('Falha ao carregar o saldo');
+      }
+    } catch (e) {
+      print('Erro: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +80,16 @@ class BalanceSection extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             subtitle: Text(
-              isVisible ? '123' : '******', // Mostra ou esconde o saldo
+              widget.isVisible ? (_balance ?? 'Carregando...') : '******',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             trailing: IconButton(
               icon: Icon(
-                isVisible ? Icons.visibility : Icons.visibility_off,
+                widget.isVisible ? Icons.visibility : Icons.visibility_off,
                 color: Colors.grey,
                 size: 30,
               ),
-              onPressed: onToggleVisibility, // Chamando a função de alternância
+              onPressed: widget.onToggleVisibility,
             ),
           ),
         ],

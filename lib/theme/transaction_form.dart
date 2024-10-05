@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:dream_flow/screens/financial/widgets/categories.dart';
-import 'package:dream_flow/screens/_partials/indicator_close.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionForm extends StatefulWidget {
