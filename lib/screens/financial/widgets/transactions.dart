@@ -90,12 +90,8 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       money = '*****';
       color = Colors.black;
     }
-    final formattedDate =
-        DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
-    final displayFatherColor = fature == 1
-        ? Colors.orange
-        : Color(
-            int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
+    final displayFatherColor = fature == 1 ? Colors.orange : Color( int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
     final displayIcon = fature == 1 ? Icons.receipt : getIconAwsome(iconName);
     return GestureDetector(
       onTap: () async {
@@ -109,7 +105,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
             builder: (context) {
               return TransactionForm(
               transaction: transactionDetails,
-              transactionType: 'expense',
+              transactionType: double.tryParse(transactionDetails['value'])! < 0 ? 'expense' : 'revenue',
               transactionId: 16,
             );
             },

@@ -47,14 +47,14 @@ class _TransactionFormState extends State<TransactionForm> {
   void initState() {
     super.initState();
     if (widget.transaction != null) {
+      
       // Ajusta os principais dados da transação
-      _descriptionController.text = widget.transaction!['name'] ?? '';
-      _valueController.text = widget.transaction!['value'] ?? 'R\$ 0,00';
+      _descriptionController.text = widget.transaction!['name'];
+      _valueController.text = forceFormatCurrency(widget.transaction!['value']);
       _selectedDate = DateTime.parse(widget.transaction!['date_purchase']);
       _selectedCategoryId = widget.transaction!['category_id'];
       _selectedWalletId = widget.transaction!['wallet_id'];
-      _selectedRecurrence =
-          widget.transaction!['recurrent_id'] != null ? 'Sim' : 'Não';
+      _selectedRecurrence = widget.transaction!['recurrent_id'] != null ? 'Sim' : 'Não';
       _observationController.text = widget.transaction!['description'] ?? '';
 
       // Ajusta as categorias
@@ -208,8 +208,7 @@ class _TransactionFormState extends State<TransactionForm> {
                         String formattedValue = forceFormatCurrency(value);
                         _valueController.value = TextEditingValue(
                           text: formattedValue,
-                          selection: TextSelection.collapsed(
-                              offset: formattedValue.length),
+                          selection: TextSelection.collapsed(offset: formattedValue.length),
                         );
                       },
                     ),
