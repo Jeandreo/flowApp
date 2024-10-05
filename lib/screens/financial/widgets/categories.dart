@@ -91,9 +91,7 @@ class _CategoriesState extends State<Categories> {
                       String selectedIcon = category.icon;
                       widget.onCategorySelected(
                         selectedId,
-                        Color(int.parse(selectedColor.substring(1, 7),
-                                radix: 16) +
-                            0xFF000000),
+                        Color(int.parse(selectedColor.substring(1, 7), radix: 16) + 0xFF000000),
                         selectedIcon,
                         category.name,
                       );
@@ -106,9 +104,7 @@ class _CategoriesState extends State<Categories> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Color(int.parse(category.color.substring(1, 7),
-                                  radix: 16) +
-                              0xFF000000),
+                          color: Color(int.parse(category.color.substring(1, 7), radix: 16) + 0xFF000000),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(

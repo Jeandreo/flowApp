@@ -7,22 +7,20 @@ import 'package:dream_flow/screens/financial/widgets/categories.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionForm extends StatefulWidget {
+  final Map<String, dynamic>? transaction;
   final String? transactionType;
   final int? transactionId;
-  final String? transactionName;
-  final String? transactionValue;
-  final String? transactionDate;
   final bool isPaid;
+
 
   const TransactionForm({
     Key? key,
+    this.transaction,
     this.transactionType,
     this.transactionId,
-    this.transactionName,
-    this.transactionValue,
-    this.transactionDate,
     this.isPaid = false,
   }) : super(key: key);
+
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -50,25 +48,38 @@ class _TransactionFormState extends State<TransactionForm> {
   @override
   void initState() {
     super.initState();
-    if (widget.transactionId != null) {
-      _descriptionController.text = widget.transactionName ?? '';
-      _valueController.text = widget.transactionValue ?? 'R\$ 0,00';
+    if (widget.transaction != null) {
+      _descriptionController.text   = widget.transaction!['name'] ?? '';
+      _valueController.text         = widget.transaction!['value'] ?? 'R\$ 0,00';
+      _selectedDate                 = DateTime.parse(widget.transaction!['date_purchase']);
+      _selectedCategoryId           = widget.transaction!['category_id'];
+      _selectedWalletId             = widget.transaction!['wallet_id'];
+      _selectedRecurrence           = widget.transaction!['recurrent_id'] != null ? 'Sim' : 'Não';
+      _observationController.text   = widget.transaction!['description'] ?? '';
+      var category                  = widget.transaction!['category'];
+      if (category != null) {
+        print(Color(int.parse(category['color'].substring(1, 7), radix: 16) +0xFF000000));
+        _selectedCategoryColor = Color(int.parse(category['color'].substring(1, 7), radix: 16) +0xFF000000);
+        _selectedCategoryIcon = category['icon'];
+        _selectedCategoryName = category['name'];
+      }
     }
   }
+
 
   // Função que envia a transação para a API
   Future<void> _addTransaction() async {
     final transactionData = {
-      'name': _descriptionController.text,
-      'value': _valueController.text,
-      'description': _observationController.text,
+      'name':         _descriptionController.text,
+      'value':        _valueController.text,
+      'description':  _observationController.text,
       'installments': _selectedInstallments,
-      'recurrent': _selectedRecurrence,
+      'recurrent':    _selectedRecurrence,
       'date_purchase': _selectedDate != null ? DateFormat('yyyy-MM-dd').format(_selectedDate!) : null,
-      'category_id': _selectedCategoryId,
-      'method': _selectedWalletType,
-      'method_id': _selectedWalletId,
-      'type': widget.transactionType,
+      'category_id':  _selectedCategoryId,
+      'method':       _selectedWalletType,
+      'method_id':    _selectedWalletId,
+      'type':         widget.transactionType,
       'created_by': 1,
     };
 
@@ -248,8 +259,7 @@ class _TransactionFormState extends State<TransactionForm> {
                                 child: _selectedWalletUrl == null
                                     ? Container(
                                         decoration: BoxDecoration(
-                                          color: _selectedCategoryColor ??
-                                              Colors.black26,
+                                          color: _selectedCategoryColor ?? Colors.black26,
                                           shape: BoxShape.circle,
                                         ),
                                         padding: const EdgeInsets.all(8),

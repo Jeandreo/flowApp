@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key, required this.isVisible});
   final bool isVisible;
-
   @override
   State<TransactionsSection> createState() => _TransactionsSectionState();
 }
@@ -109,12 +108,10 @@ class _TransactionsSectionState extends State<TransactionsSection> {
             backgroundColor: Colors.white,
             builder: (context) {
               return TransactionForm(
-                transactionId: transactionDetails['id'],
-                transactionName: transactionDetails['name'],
-                transactionValue: transactionDetails['value'],
-                transactionDate: transactionDetails['date_payment'],
-                isPaid: transactionDetails['paid'] == 1,
-              );
+              transaction: transactionDetails,
+              transactionType: 'expense',
+              transactionId: 16,
+            );
             },
           );
         } catch (error) {
