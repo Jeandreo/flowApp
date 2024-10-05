@@ -58,16 +58,13 @@ class _TransactionFormState extends State<TransactionForm> {
 
   // Função que envia a transação para a API
   Future<void> _addTransaction() async {
-    // Realiza as verificações
     final transactionData = {
       'name': _descriptionController.text,
       'value': _valueController.text,
       'description': _observationController.text,
       'installments': _selectedInstallments,
       'recurrent': _selectedRecurrence,
-      'date_purchase': _selectedDate != null
-          ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
-          : null,
+      'date_purchase': _selectedDate != null ? DateFormat('yyyy-MM-dd').format(_selectedDate!) : null,
       'category_id': _selectedCategoryId,
       'method': _selectedWalletType,
       'method_id': _selectedWalletId,

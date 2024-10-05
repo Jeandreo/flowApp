@@ -101,8 +101,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     return GestureDetector(
       onTap: () async {
         try {
-          final transactionDetails =
-              await fetchTransactionDetails(transactionId);
+          final transactionDetails = await fetchTransactionDetails(transactionId);
           if (!mounted) return;
           showModalBottomSheet(
             context: context,
