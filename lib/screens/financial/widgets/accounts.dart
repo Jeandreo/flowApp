@@ -25,7 +25,8 @@ class _AccountsSectionState extends State<AccountsSection> {
   }
 
   Future<List<Map<String, dynamic>>> fetchAccounts() async {
-    final response = await http.get(Uri.parse('${apiRoute()}/financeiro/carteiras-e-cartoes'));
+    final response = await http
+        .get(Uri.parse('${apiRoute()}/financeiro/carteiras-e-cartoes'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -51,6 +52,7 @@ class _AccountsSectionState extends State<AccountsSection> {
         }
 
         final accounts = snapshot.data!;
+        print(accounts);
 
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -63,6 +65,7 @@ class _AccountsSectionState extends State<AccountsSection> {
                   child: _buildAccountCard(
                     account['institution_id']!,
                     account['name']!,
+                    account['total']!,
                   ),
                 ),
               );
@@ -78,7 +81,8 @@ class _AccountsSectionState extends State<AccountsSection> {
     return 'https://flow.dreamake.com.br/storage/instituicoes/$institutionId/logo-150px.jpg';
   }
 
-  Widget _buildAccountCard(int institutionId, String accountName) {
+  Widget _buildAccountCard(
+      int institutionId, String accountName, dynamic accountTotal) {
     return Container(
       padding: const EdgeInsets.all(8.0),
       decoration: const BoxDecoration(
@@ -119,7 +123,9 @@ class _AccountsSectionState extends State<AccountsSection> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  widget.isBalanceVisible ? '000' : '******',
+                  widget.isBalanceVisible
+                      ? formatCurrency(accountTotal)
+                      : '******', // Conversão para string
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
