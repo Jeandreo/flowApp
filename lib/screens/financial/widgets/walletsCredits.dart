@@ -32,14 +32,8 @@ class _WalletsCreditsState extends State<WalletsCredits> {
     }
   }
 
-  // Gera URL da imagem da instituição
-  String _getImageUrl(int institutionId) {
-    return 'https://flow.dreamake.com.br/storage/instituicoes/$institutionId/logo-150px.jpg';
-  }
-
   Future<List<WalletCreditModel>> _fetchWalletsCredits() async {
-    final response = await http.get(Uri.parse(
-        '${apiRoute()}/financeiro/carteiras-e-cartoes'));
+    final response = await http.get(Uri.parse('${apiRoute()}/financeiro/carteiras-e-cartoes'));
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
       return jsonResponse
@@ -47,7 +41,7 @@ class _WalletsCreditsState extends State<WalletsCredits> {
                 id: data['id'],
                 name: data['name'],
                 type: data['type'],
-                url: _getImageUrl(data['institution_id']),
+                url: data['url'],
               ))
           .toList();
     } else {

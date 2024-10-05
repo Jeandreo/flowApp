@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+String webRoute() {
+  // return 'https://flow.dreamake.com.br';
+  return 'https://e340-189-4-3-149.ngrok-free.app';
+}
+
 String apiRoute() {
-  // const baseUrl = 'https://flow.dreamake.com.br/api';
-  const baseUrl = 'https://e340-189-4-3-149.ngrok-free.app/api';
-  return baseUrl;
+    return '${webRoute()}/api';
 }
 
 // Função utilitária para formatar valores monetários

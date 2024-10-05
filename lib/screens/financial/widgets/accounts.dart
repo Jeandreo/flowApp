@@ -66,6 +66,7 @@ class _AccountsSectionState extends State<AccountsSection> {
                     account['institution_id']!,
                     account['name']!,
                     account['total']!,
+                    account['url']!,
                   ),
                 ),
               );
@@ -76,13 +77,7 @@ class _AccountsSectionState extends State<AccountsSection> {
     );
   }
 
-  // Gera URL da imagem da instituição
-  String _getImageUrl(int institutionId) {
-    return 'https://flow.dreamake.com.br/storage/instituicoes/$institutionId/logo-150px.jpg';
-  }
-
-  Widget _buildAccountCard(
-      int institutionId, String accountName, dynamic accountTotal) {
+  Widget _buildAccountCard(int institutionId, String accountName, dynamic accountTotal, String urlImage) {
     return Container(
       padding: const EdgeInsets.all(8.0),
       decoration: const BoxDecoration(
@@ -102,7 +97,7 @@ class _AccountsSectionState extends State<AccountsSection> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
-              _getImageUrl(institutionId),
+              urlImage,
               width: 40,
               height: 40,
               fit: BoxFit.cover,

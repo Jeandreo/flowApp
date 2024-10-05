@@ -49,6 +49,8 @@ class _TransactionFormState extends State<TransactionForm> {
   void initState() {
     super.initState();
     if (widget.transaction != null) {
+
+      // Ajusta os principais dados da transação
       _descriptionController.text   = widget.transaction!['name'] ?? '';
       _valueController.text         = widget.transaction!['value'] ?? 'R\$ 0,00';
       _selectedDate                 = DateTime.parse(widget.transaction!['date_purchase']);
@@ -56,13 +58,25 @@ class _TransactionFormState extends State<TransactionForm> {
       _selectedWalletId             = widget.transaction!['wallet_id'];
       _selectedRecurrence           = widget.transaction!['recurrent_id'] != null ? 'Sim' : 'Não';
       _observationController.text   = widget.transaction!['description'] ?? '';
-      var category                  = widget.transaction!['category'];
+
+      // Ajusta as categorias
+      var category = widget.transaction!['category'];
       if (category != null) {
-        print(Color(int.parse(category['color'].substring(1, 7), radix: 16) +0xFF000000));
         _selectedCategoryColor = Color(int.parse(category['color'].substring(1, 7), radix: 16) +0xFF000000);
+        _selectedCategoryId   = category['id'];
         _selectedCategoryIcon = category['icon'];
         _selectedCategoryName = category['name'];
       }
+
+      // Ajusta as categorias
+      var payment = widget.transaction!['payment'];
+      if (payment != null) {
+        _selectedWalletId   = payment['id'];
+        _selectedWalletName = payment['name'];
+        _selectedWalletUrl  = payment['url'];
+        _selectedWalletType = payment['type'];
+      }
+
     }
   }
 
