@@ -1,51 +1,25 @@
+import 'package:dream_flow/services/api_service.dart';
+import 'package:dream_flow/services/transaction_service.dart';
 import 'package:dream_flow/theme/transaction_form.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_flow/services/api_service.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:intl/intl.dart';
 
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key, required this.isVisible});
   final bool isVisible;
+
   @override
   State<TransactionsSection> createState() => _TransactionsSectionState();
 }
 
 class _TransactionsSectionState extends State<TransactionsSection> {
   late Future<List<dynamic>> _transactionsFuture;
+
   @override
   void initState() {
     super.initState();
-    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes')
-        .then((data) => data['transactions'] as List<dynamic>);
-  }
-
-  Future<void> markAsPaid(int transactionId) async {
-    try {
-      final response = await requestApi(
-          '${apiRoute()}/financeiro/marcar-como-pago/$transactionId');
-      if (response['success']) {
-        setState(() {
-          _transactionsFuture =
-              requestApi('${apiRoute()}/financeiro/transacoes')
-                  .then((data) => data['transactions'] as List<dynamic>);
-        });
-      }
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  Future<Map<String, dynamic>> fetchTransactionDetails(int transactionId) async {
-    try {
-      final response = await requestApi(
-          '${apiRoute()}/financeiro/transacoes/$transactionId');
-      if (response['success']) return response['transaction'];
-      throw Exception('Erro ao obter detalhes da transação');
-    } catch (error) {
-      print(error);
-      rethrow;
-    }
+    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
   }
 
   @override
