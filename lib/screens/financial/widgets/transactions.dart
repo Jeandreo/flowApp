@@ -17,8 +17,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   @override
   void initState() {
     super.initState();
-    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes')
-        .then((data) => data['transactions'] as List<dynamic>);
+    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
   }
 
   Future<void> markAsPaid(int transactionId) async {
@@ -29,9 +28,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       if (response['success']) {
         setState(() {
           // Recarrega as transações após marcar como pago
-          _transactionsFuture =
-              requestApi('${apiRoute()}/financeiro/transacoes')
-                  .then((data) => data['transactions'] as List<dynamic>);
+          _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
         });
       }
     } catch (error) {
@@ -85,6 +82,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                 transaction['date_payment'],
                 transaction['color'],
                 transaction['icon'],
+                transaction['paid'] == 1,
                 transaction['fature'],
                 widget.isVisible,
               ),
@@ -101,12 +99,14 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     String datePayment,
     String? fatherColor,
     String? iconName,
+    bool isPaid,
     int fature,
     bool isVisible,
   ) {
     String money;
     Color color;
 
+    // Formatação do valor
     if (isVisible) {
       money = formatCurrency(double.tryParse(value) ?? 0.0);
       color = double.parse(value) >= 0 ? Colors.green : Colors.red;
@@ -128,6 +128,7 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
+          // Ícone da transação
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -145,11 +146,17 @@ class _TransactionsSectionState extends State<TransactionsSection> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name,
-                  style: Theme.of(context).textTheme.titleSmall,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        name,
+                        style: Theme.of(context).textTheme.titleSmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
                 Text(
                   formattedDate,
@@ -158,13 +165,67 @@ class _TransactionsSectionState extends State<TransactionsSection> {
               ],
             ),
           ),
-          Text(
-            money,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: color,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                money,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: color,
+                ),
+              ),
+              Row(
+                children: [
+                  if (isPaid) ...[
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: CircleAvatar(
+                            radius: 3,
+                            backgroundColor: Colors.green,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'pago',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 141, 141, 141),
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ] else ...[
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: CircleAvatar(
+                            radius: 3,
+                            backgroundColor: Colors.red,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'não pago',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 141, 141, 141),
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ],
           ),
         ],
       ),
