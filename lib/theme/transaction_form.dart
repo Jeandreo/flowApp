@@ -12,7 +12,6 @@ class TransactionForm extends StatefulWidget {
   final int? transactionId;
   final bool isPaid;
 
-
   const TransactionForm({
     Key? key,
     this.transaction,
@@ -20,7 +19,6 @@ class TransactionForm extends StatefulWidget {
     this.transactionId,
     this.isPaid = false,
   }) : super(key: key);
-
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -49,21 +47,23 @@ class _TransactionFormState extends State<TransactionForm> {
   void initState() {
     super.initState();
     if (widget.transaction != null) {
-
       // Ajusta os principais dados da transação
-      _descriptionController.text   = widget.transaction!['name'] ?? '';
-      _valueController.text         = widget.transaction!['value'] ?? 'R\$ 0,00';
-      _selectedDate                 = DateTime.parse(widget.transaction!['date_purchase']);
-      _selectedCategoryId           = widget.transaction!['category_id'];
-      _selectedWalletId             = widget.transaction!['wallet_id'];
-      _selectedRecurrence           = widget.transaction!['recurrent_id'] != null ? 'Sim' : 'Não';
-      _observationController.text   = widget.transaction!['description'] ?? '';
+      _descriptionController.text = widget.transaction!['name'] ?? '';
+      _valueController.text = widget.transaction!['value'] ?? 'R\$ 0,00';
+      _selectedDate = DateTime.parse(widget.transaction!['date_purchase']);
+      _selectedCategoryId = widget.transaction!['category_id'];
+      _selectedWalletId = widget.transaction!['wallet_id'];
+      _selectedRecurrence =
+          widget.transaction!['recurrent_id'] != null ? 'Sim' : 'Não';
+      _observationController.text = widget.transaction!['description'] ?? '';
 
       // Ajusta as categorias
       var category = widget.transaction!['category'];
       if (category != null) {
-        _selectedCategoryColor = Color(int.parse(category['color'].substring(1, 7), radix: 16) +0xFF000000);
-        _selectedCategoryId   = category['id'];
+        _selectedCategoryColor = Color(
+            int.parse(category['color'].substring(1, 7), radix: 16) +
+                0xFF000000);
+        _selectedCategoryId = category['id'];
         _selectedCategoryIcon = category['icon'];
         _selectedCategoryName = category['name'];
       }
@@ -71,29 +71,29 @@ class _TransactionFormState extends State<TransactionForm> {
       // Ajusta as categorias
       var payment = widget.transaction!['payment'];
       if (payment != null) {
-        _selectedWalletId   = payment['id'];
+        _selectedWalletId = payment['id'];
         _selectedWalletName = payment['name'];
-        _selectedWalletUrl  = payment['url'];
+        _selectedWalletUrl = payment['url'];
         _selectedWalletType = payment['type'];
       }
-
     }
   }
-
 
   // Função que envia a transação para a API
   Future<void> _addTransaction() async {
     final transactionData = {
-      'name':         _descriptionController.text,
-      'value':        _valueController.text,
-      'description':  _observationController.text,
+      'name': _descriptionController.text,
+      'value': _valueController.text,
+      'description': _observationController.text,
       'installments': _selectedInstallments,
-      'recurrent':    _selectedRecurrence,
-      'date_purchase': _selectedDate != null ? DateFormat('yyyy-MM-dd').format(_selectedDate!) : null,
-      'category_id':  _selectedCategoryId,
-      'method':       _selectedWalletType,
-      'method_id':    _selectedWalletId,
-      'type':         widget.transactionType,
+      'recurrent': _selectedRecurrence,
+      'date_purchase': _selectedDate != null
+          ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
+          : null,
+      'category_id': _selectedCategoryId,
+      'method': _selectedWalletType,
+      'method_id': _selectedWalletId,
+      'type': widget.transactionType,
       'created_by': 1,
     };
 
@@ -273,8 +273,8 @@ class _TransactionFormState extends State<TransactionForm> {
                                 child: _selectedWalletUrl == null
                                     ? Container(
                                         decoration: BoxDecoration(
-                                          color: _selectedCategoryColor ?? Colors.black26,
-                                          shape: BoxShape.circle,
+                                          color: Colors.black26,
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         padding: const EdgeInsets.all(8),
                                         child: const Icon(
