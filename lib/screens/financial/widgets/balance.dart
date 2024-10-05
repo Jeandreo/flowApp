@@ -40,8 +40,8 @@ class _BalanceSectionState extends State<BalanceSection> {
       } else {
         throw Exception('Falha ao carregar o saldo');
       }
-    } catch (e) {
-      print('Erro: $e');
+    } catch (error) {
+      print(error);
     }
   }
 

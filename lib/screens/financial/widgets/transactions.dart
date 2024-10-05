@@ -3,10 +3,10 @@ import 'package:dream_flow/services/api_service.dart';
 import 'package:dream_flow/utils/utils.dart';
 import 'package:intl/intl.dart';
 
-
 class TransactionsSection extends StatefulWidget {
   const TransactionsSection({super.key, required this.isVisible});
   final bool isVisible;
+
   @override
   State<TransactionsSection> createState() => _TransactionsSectionState();
 }
@@ -17,7 +17,26 @@ class _TransactionsSectionState extends State<TransactionsSection> {
   @override
   void initState() {
     super.initState();
-    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes').then((data) => data['transactions'] as List<dynamic>);
+    _transactionsFuture = requestApi('${apiRoute()}/financeiro/transacoes')
+        .then((data) => data['transactions'] as List<dynamic>);
+  }
+
+  Future<void> markAsPaid(int transactionId) async {
+    try {
+      final response = await requestApi(
+        '${apiRoute()}/financeiro/marcar-como-pago/$transactionId',
+      );
+      if (response['success']) {
+        setState(() {
+          // Recarrega as transações após marcar como pago
+          _transactionsFuture =
+              requestApi('${apiRoute()}/financeiro/transacoes')
+                  .then((data) => data['transactions'] as List<dynamic>);
+        });
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
@@ -38,10 +57,29 @@ class _TransactionsSectionState extends State<TransactionsSection> {
         final transactions = snapshot.data!;
 
         return ListView.builder(
-            itemCount: transactions.length,
-            itemBuilder: (context, index) {
-              final transaction = transactions[index];
-              return _buildTransactionItem(
+          itemCount: transactions.length,
+          itemBuilder: (context, index) {
+            final transaction = transactions[index];
+            return Dismissible(
+              key: Key(transaction['id'].toString()),
+              direction: DismissDirection
+                  .endToStart, // Permite apenas o arrasto para a direita
+              background: Container(
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                color: Colors.green,
+                child: const Icon(Icons.check, color: Colors.white),
+              ),
+              confirmDismiss: (direction) async {
+                // Executa a ação sem remover o item da lista
+                if (direction == DismissDirection.endToStart) {
+                  await markAsPaid(transaction[
+                      'id']); // Chama a função para marcar como pago
+                  return false; // Impede que o item seja removido
+                }
+                return false;
+              },
+              child: _buildTransactionItem(
                 transaction['name'],
                 transaction['value'],
                 transaction['date_payment'],
@@ -49,9 +87,10 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                 transaction['icon'],
                 transaction['fature'],
                 widget.isVisible,
-              );
-            },
-          );
+              ),
+            );
+          },
+        );
       },
     );
   }
@@ -65,13 +104,10 @@ class _TransactionsSectionState extends State<TransactionsSection> {
     int fature,
     bool isVisible,
   ) {
-
-    // Define as variáveis dos valores
     String money;
     Color color;
 
-    // Se for permitido ver, formata.
-    if(isVisible){
+    if (isVisible) {
       money = formatCurrency(double.tryParse(value) ?? 0.0);
       color = double.parse(value) >= 0 ? Colors.green : Colors.red;
     } else {
@@ -79,19 +115,23 @@ class _TransactionsSectionState extends State<TransactionsSection> {
       color = Colors.black;
     }
 
-    // Formatar a data de pagamento
-    final formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
-    final displayfatherColor = fature == 1 ? Colors.orange : Color(int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
+    final formattedDate =
+        DateFormat('dd/MM/yyyy').format(DateTime.parse(datePayment));
+    final displayFatherColor = fature == 1
+        ? Colors.orange
+        : Color(
+            int.parse(fatherColor!.substring(1, 7), radix: 16) + 0xFF000000);
     final displayIcon = fature == 1 ? Icons.receipt : getIconAwsome(iconName);
 
     return Container(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: displayfatherColor,
+              color: displayFatherColor,
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -111,7 +151,6 @@ class _TransactionsSectionState extends State<TransactionsSection> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                // Exibir a data de pagamento
                 Text(
                   formattedDate,
                   style: Theme.of(context).textTheme.bodySmall,

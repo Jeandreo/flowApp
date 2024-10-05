@@ -24,13 +24,11 @@ Future<void> login(String email, String password) async {
       // Armazena o token localmente usando SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('authToken', token);
-
-      print('Login bem-sucedido. Token salvo.');
     } else {
-      print('Falha no login: ${response.body}');
+      print(response.body);
     }
-  } catch (e) {
-    print('Erro: $e');
+  } catch (error) {
+    print(error);
   }
 }
 

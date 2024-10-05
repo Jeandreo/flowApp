@@ -51,8 +51,8 @@ class _AccountsSectionState extends State<AccountsSection> {
           return const Center(child: Text('Nenhuma conta encontrada.'));
         }
 
+        // Obtém contas
         final accounts = snapshot.data!;
-        print(accounts);
 
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,

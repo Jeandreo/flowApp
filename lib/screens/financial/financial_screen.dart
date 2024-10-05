@@ -66,7 +66,7 @@ class _FinancialScreenState extends State<FinancialScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
