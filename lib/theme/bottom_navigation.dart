@@ -1,4 +1,3 @@
-// lib/bottom_navigation_layout.dart
 import 'package:flutter/material.dart';
 import 'options_button.dart';
 
@@ -13,7 +12,7 @@ class BottomNavigationLayout extends StatefulWidget {
     required this.currentIndex,
     required this.onItemTapped,
   });
-
+  
   @override
   State<BottomNavigationLayout> createState() => _BottomNavigationLayoutState();
 }
@@ -84,7 +83,8 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
                     ),
                     child: Center(
                       child: IconButton(
-                        icon: const Icon(Icons.add_circle_sharp, size: 30, color: Colors.white),
+                        icon: const Icon(Icons.add_circle_sharp,
+                            size: 30, color: Colors.white),
                         onPressed: _nabBottomOptions,
                       ),
                     ),

@@ -8,7 +8,21 @@ import 'package:http/http.dart' as http;
 
 class TransactionForm extends StatefulWidget {
   final String? transactionType;
-  const TransactionForm({Key? key, this.transactionType}) : super(key: key);
+  final int? transactionId;
+  final String? transactionName;
+  final String? transactionValue;
+  final String? transactionDate;
+  final bool isPaid;
+
+  const TransactionForm({
+    Key? key,
+    this.transactionType,
+    this.transactionId,
+    this.transactionName,
+    this.transactionValue,
+    this.transactionDate,
+    this.isPaid = false,
+  }) : super(key: key);
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -36,6 +50,10 @@ class _TransactionFormState extends State<TransactionForm> {
   @override
   void initState() {
     super.initState();
+    if (widget.transactionId != null) {
+      _descriptionController.text = widget.transactionName ?? '';
+      _valueController.text = widget.transactionValue ?? 'R\$ 0,00';
+    }
   }
 
   // Função que envia a transação para a API
