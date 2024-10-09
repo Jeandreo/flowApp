@@ -1,4 +1,4 @@
-import 'package:dream_flow/theme/top_bar.dart';
+import 'package:meu_financeiro_organizado/theme/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsScreen extends StatefulWidget {

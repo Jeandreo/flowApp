@@ -1,8 +1,8 @@
-import 'package:dream_flow/services/api_service.dart';
-import 'package:dream_flow/services/transaction_service.dart';
-import 'package:dream_flow/theme/transaction_form.dart';
+import 'package:meu_financeiro_organizado/services/api_service.dart';
+import 'package:meu_financeiro_organizado/services/transaction_service.dart';
+import 'package:meu_financeiro_organizado/theme/transaction_form.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_flow/utils/utils.dart';
+import 'package:meu_financeiro_organizado/utils/utils.dart';
 import 'package:intl/intl.dart';
 
 class TransactionsSection extends StatefulWidget {

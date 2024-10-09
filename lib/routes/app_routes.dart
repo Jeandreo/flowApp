@@ -1,9 +1,8 @@
-import 'package:dream_flow/screens/auth/login.dart';
-import 'package:dream_flow/screens/financial/financial_screen.dart';
-import 'package:dream_flow/screens/financial/transactions_screen.dart';
-import 'package:dream_flow/screens/home_screen.dart';
-import 'package:dream_flow/screens/lists/lists_screen.dart';
-import 'package:dream_flow/screens/tasks/tasks_screen.dart';
+import 'package:meu_financeiro_organizado/screens/auth/login.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/financial_screen.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/transactions_screen.dart';
+import 'package:meu_financeiro_organizado/screens/home_screen.dart';
+import 'package:meu_financeiro_organizado/screens/lists/lists_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -26,8 +25,6 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const TransactionsScreen());
       case lists:
         return MaterialPageRoute(builder: (_) => const ListsScreen());
-      case tasks:
-        return MaterialPageRoute(builder: (_) => const TasksScreen());
       default:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
     }

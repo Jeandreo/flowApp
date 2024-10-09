@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dream_flow/models/user_model.dart'; // Importar o UserModel
+import 'package:meu_financeiro_organizado/models/user_model.dart'; // Importar o UserModel
 
 class HeaderUserSection extends StatefulWidget {
   const HeaderUserSection({super.key});

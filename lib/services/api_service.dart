@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dream_flow/utils/utils.dart';
+import 'package:meu_financeiro_organizado/utils/utils.dart';
 
 Future<void> login(String email, String password) async {
   // URL para login no Flow

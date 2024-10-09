@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:dream_flow/models/user_model.dart';
-import 'package:dream_flow/utils/utils.dart';
+import 'package:meu_financeiro_organizado/models/user_model.dart';
+import 'package:meu_financeiro_organizado/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

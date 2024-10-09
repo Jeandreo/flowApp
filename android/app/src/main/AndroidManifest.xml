@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="dream_flow"
+        android:label="meu_financeiro_organizado"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

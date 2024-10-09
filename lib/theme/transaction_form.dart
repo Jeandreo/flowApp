@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:dream_flow/screens/financial/widgets/walletsCredits.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/widgets/walletsCredits.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:dream_flow/utils/utils.dart';
-import 'package:dream_flow/screens/financial/widgets/categories.dart';
+import 'package:meu_financeiro_organizado/utils/utils.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/widgets/categories.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionForm extends StatefulWidget {

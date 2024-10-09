@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:dream_flow/screens/financial/transactions_screen.dart';
-import 'package:dream_flow/screens/financial/financial_screen.dart';
-import 'package:dream_flow/screens/tasks/tasks_screen.dart';
-import 'package:dream_flow/screens/lists/lists_screen.dart';
-import 'package:dream_flow/theme/bottom_navigation.dart';
-import 'package:dream_flow/models/user_model.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/transactions_screen.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/financial_screen.dart';
+import 'package:meu_financeiro_organizado/screens/lists/lists_screen.dart';
+import 'package:meu_financeiro_organizado/theme/bottom_navigation.dart';
+import 'package:meu_financeiro_organizado/models/user_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     const FinancialScreen(),
     const TransactionsScreen(),
-    const TasksScreen(),
     const ListsScreen(),
   ];
 

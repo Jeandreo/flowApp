@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:dream_flow/screens/financial/widgets/transactions.dart';
-import 'package:dream_flow/screens/financial/widgets/accounts.dart';
-import 'package:dream_flow/screens/financial/widgets/balance.dart';
-import 'package:dream_flow/screens/financial/widgets/header.dart';
-import 'package:dream_flow/utils/preferences.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/widgets/transactions.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/widgets/accounts.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/widgets/balance.dart';
+import 'package:meu_financeiro_organizado/screens/dashboard/widgets/header.dart';
+import 'package:meu_financeiro_organizado/utils/preferences.dart';
 
 class FinancialScreen extends StatefulWidget {
   const FinancialScreen({super.key});

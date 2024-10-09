@@ -1,5 +1,5 @@
-import 'package:dream_flow/screens/_partials/indicator_close.dart';
-import 'package:dream_flow/theme/transaction_form.dart';
+import 'package:meu_financeiro_organizado/screens/_partials/indicator_close.dart';
+import 'package:meu_financeiro_organizado/theme/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 class NavBottomOptionsModal extends StatefulWidget {

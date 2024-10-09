@@ -1,4 +1,4 @@
-package com.example.dream_flow
+package com.example.meu_financeiro_organizado
 
 import io.flutter.embedding.android.FlutterActivity
 
